@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Assistant TDAH - Gestion des tâches, séquentiels et organisation au quotidien">
+    <title>Assistant TDAH - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Bibliothèques externes -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        /* Styles spécifiques à l'assistant TDAH */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .tab-btn:hover {
+            background: var(--tdah-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active {
+            background: var(--tdah-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .task-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--tdah-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+        
+        .task-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .task-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .task-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .priority-haute { border-left-color: #FF6B6B; }
+        .priority-moyenne { border-left-color: #FFB84D; }
+        .priority-basse { border-left-color: #51CF66; }
+        .priority-someday { border-left-color: #4ECDC4; }
+        
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .emotion-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .emotion-card:hover {
+            transform: scale(1.05);
+            border-color: var(--tdah-color);
+        }
+        
+        .emotion-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation principale -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html" class="active">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn" title="Taille du texte">A+</button>
+                <button id="contrastBtn" class="accessibility-btn" title="Contraste élevé">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn" title="Police dyslexique">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Fil d'Ariane -->
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Assistant TDAH</li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <div class="card" style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; animation: float 3s ease-in-out infinite;">
+                <img src="logo-petit-prince.webp" alt="Le Petit Prince" style="width: 100px; height: auto; margin-bottom: 20px;">
+            </div>
+            <h1 class="card-title" style="color: var(--tdah-color); font-size: 2.5rem;">🧠 Mon Assistant TDAH</h1>
+            <p style="font-size: 1.2rem; color: #666;">Gestion de l'attention, de l'organisation et des émotions au quotidien</p>
+        </div>
+
+        <!-- Onglets -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tasks')">📋 Mes Tâches</button>
+            <button class="tab-btn" onclick="switchTab('sequential')">📋 Créer un Séquentiel</button>
+            <button class="tab-btn" onclick="switchTab('stats')">📊 Mes Statistiques</button>
+            <button class="tab-btn" onclick="switchTab('problem')">🧩 Résoudre un Problème</button>
+            <button class="tab-btn" onclick="switchTab('situations')">🎪 Situations</button>
+            <button class="tab-btn" onclick="switchTab('tips')">💡 Astuces</button>
+        </div>
+
+        <!-- CONTENU DES ONGLETS -->
+        
+        <!-- TÂCHES -->
+        <div id="tasks" class="tab-content active">
+            <div class="card">
+                <h2 class="card-title">📋 Gestion des tâches</h2>
+                <p>Organise tes tâches par priorité pour rester concentré sur l'essentiel !</p>
+                
+                <div style="margin: 30px 0;">
+                    <input type="text" id="newTask" placeholder="Ajouter une nouvelle tâche..." style="width: 70%; margin-right: 10px;">
+                    <select id="taskPriority" style="width: 25%;">
+                        <option value="haute">🔴 Haute</option>
+                        <option value="moyenne">🟡 Moyenne</option>
+                        <option value="basse">🟢 Basse</option>
+                        <option value="someday">🔵 Un jour</option>
+                    </select>
+                    <button onclick="addTask()" class="btn btn-primary" style="margin-top: 15px; width: 100%;">➕ Ajouter</button>
+                </div>
+
+                <div id="tasksList" class="task-grid"></div>
+            </div>
+        </div>
+
+        <!-- SÉQUENTIEL -->
+        <div id="sequential" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">📋 Créer un Séquentiel Visuel</h2>
+                <p>Crée une suite d'étapes avec des images pour structurer une routine ou une tâche complexe.</p>
+                
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tdah-color); margin-bottom: 15px;">📝 Titre du séquentiel :</h3>
+                    <input type="text" id="sequentialTitle" placeholder="Ex: Ma routine du matin, Faire mes devoirs...">
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tdah-color); margin-bottom: 15px;">📌 Étapes :</h3>
+                    <div id="sequentialSteps"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button onclick="addSequentialStep()" class="btn btn-success" style="flex: 1; min-width: 200px;">➕ Ajouter une étape</button>
+                    <button onclick="generateSequentialPDF()" class="btn btn-info" style="flex: 1; min-width: 200px;">📄 Générer le PDF</button>
+                    <button onclick="clearSequential()" class="btn btn-danger" style="flex: 1; min-width: 200px;">🗑️ Tout effacer</button>
+                </div>
+
+                <div id="sequentialMessage" style="display: none; margin-top: 15px;"></div>
+            </div>
+
+            <div class="card" style="background: #FFF3E0; border: 2px solid var(--tdah-color);">
+                <h3 style="color: var(--tdah-color);">💡 Comment créer ton séquentiel ?</h3>
+                <ol style="line-height: 2; margin: 20px 0 0 30px;">
+                    <li>Donne un titre à ton séquentiel</li>
+                    <li>Ajoute des étapes une par une</li>
+                    <li>Pour chaque étape : écris le texte + optionnellement ajoute une image</li>
+                    <li>Réorganise avec les flèches ↑ ↓</li>
+                    <li>Génère le PDF pour l'imprimer !</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- STATISTIQUES -->
+        <div id="stats" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">📊 Mes Statistiques</h2>
+                <p>Visualise tes progrès et tes réussites !</p>
+                
+                <div style="margin: 30px 0;">
+                    <canvas id="statsChart" style="max-height: 400px;"></canvas>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background: #E8F5E9; padding: 20px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--success);">✓</div>
+                        <div style="font-size: 2rem; font-weight: 700;" id="completedCount">0</div>
+                        <div style="color: #666;">Tâches complétées</div>
+                    </div>
+                    <div style="background: #FFF3E0; padding: 20px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--warning);">⏳</div>
+                        <div style="font-size: 2rem; font-weight: 700;" id="pendingCount">0</div>
+                        <div style="color: #666;">En cours</div>
+                    </div>
+                    <div style="background: #E3F2FD; padding: 20px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 2.5rem; color: var(--info);">🎯</div>
+                        <div style="font-size: 2rem; font-weight: 700;" id="streakCount">0</div>
+                        <div style="color: #666;">Jours d'affilée</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RÉSOUDRE UN PROBLÈME -->
+        <div id="problem" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🧩 Résoudre un Problème</h2>
+                <p>Décompose un problème complexe en étapes simples.</p>
+                
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tdah-color); margin-bottom: 15px;">❓ Quel est ton problème ?</h3>
+                    <textarea id="problemDesc" placeholder="Décris ton problème ici..." style="height: 100px;"></textarea>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tdah-color); margin-bottom: 15px;">💡 Solutions possibles :</h3>
+                    <div id="solutionsArea"></div>
+                    <button onclick="addSolution()" class="btn btn-success" style="margin-top: 15px;">➕ Ajouter une solution</button>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tdah-color); margin-bottom: 15px;">✅ Plan d'action :</h3>
+                    <div id="actionPlan"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SITUATIONS -->
+        <div id="situations" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🎪 Situations du quotidien</h2>
+                <p>Des stratégies pour gérer les situations difficiles liées au TDAH.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background: #FFF3E0; padding: 25px; border-radius: 15px; border-left: 5px solid var(--warning);">
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">😵 Procrastination</h3>
+                        <p style="margin-bottom: 15px; color: #666;"><strong>Stratégies :</strong></p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Découpe en mini-tâches de 5 min</li>
+                            <li>Utilise la règle des 2 minutes</li>
+                            <li>Change d'environnement</li>
+                            <li>Commence par le plus facile</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #E8F5E9; padding: 25px; border-radius: 15px; border-left: 5px solid var(--success);">
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">⏰ Gestion du temps</h3>
+                        <p style="margin-bottom: 15px; color: #666;"><strong>Stratégies :</strong></p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Timer visuel pour chaque tâche</li>
+                            <li>Alarmes pour les transitions</li>
+                            <li>Planification la veille au soir</li>
+                            <li>Anticiper les imprévus</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #E3F2FD; padding: 25px; border-radius: 15px; border-left: 5px solid var(--info);">
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">🎯 Hyperfocus</h3>
+                        <p style="margin-bottom: 15px; color: #666;"><strong>Stratégies :</strong></p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Programme des pauses obligatoires</li>
+                            <li>Alarmes toutes les heures</li>
+                            <li>Hydratation et snacks à proximité</li>
+                            <li>Note tes idées sans quitter ta tâche</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #FCE4EC; padding: 25px; border-radius: 15px; border-left: 5px solid #E91E63;">
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">😤 Frustration</h3>
+                        <p style="margin-bottom: 15px; color: #666;"><strong>Stratégies :</strong></p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Pause de 5 minutes obligatoire</li>
+                            <li>Respiration 4-7-8</li>
+                            <li>Activité physique brève</li>
+                            <li>Parler à quelqu'un</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ASTUCES -->
+        <div id="tips" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">💡 Astuces TDAH</h2>
+                <p>Des conseils pratiques pour mieux vivre avec le TDAH au quotidien.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🧩</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Diviser pour régner</h3>
+                        <p style="line-height: 1.6;">Découpe chaque grande tâche en mini-étapes de 5-10 minutes. C'est moins intimidant et tu auras plus de victoires à célébrer !</p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">⏰</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Timer ton ami</h3>
+                        <p style="line-height: 1.6;">Utilise des timers pour TOUT : temps de travail, pause, transition. Ça aide ton cerveau à comprendre les limites temporelles.</p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Rends-le visuel</h3>
+                        <p style="line-height: 1.6;">Post-its colorés, tableaux, listes avec dessins... Plus c'est visuel, plus ton cerveau TDAH l'adore !</p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🚶</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Bouge ton corps</h3>
+                        <p style="line-height: 1.6;">Besoin de bouger ? C'est normal ! Intègre du mouvement : marche, étirements, fidgets. Ton corps a besoin d'évacuer.</p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">📱</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Limite les distractions</h3>
+                        <p style="line-height: 1.6;">Phone en mode avion, notifications OFF, une seule fenêtre ouverte. Ton environnement doit être ton allié.</p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎁</div>
+                        <h3 style="color: var(--tdah-color); margin-bottom: 10px;">Système de récompenses</h3>
+                        <p style="line-height: 1.6;">Après chaque tâche, offre-toi un petit plaisir : snack, vidéo courte, jeu 5 min. Ton cerveau adore la dopamine !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <ul>
+                    <li><a href="assistant-tdah.html">Assistant TDAH</a></li>
+                    <li><a href="assistant-tsa.html">Assistant TSA</a></li>
+                    <li><a href="assistant-dys.html">Assistant Dys</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        // GESTION DES TÂCHES
+        let tasks = JSON.parse(localStorage.getItem('tdah_tasks')) || [];
+
+        function addTask() {
+            const taskInput = document.getElementById('newTask');
+            const priority = document.getElementById('taskPriority').value;
+            
+            if (!taskInput.value.trim()) {
+                Utils.showToast('❌ Entre une tâche !', 'error');
+                return;
+            }
+            
+            const task = {
+                id: Utils.generateId(),
+                text: taskInput.value.trim(),
+                priority: priority,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            tasks.push(task);
+            saveTasks();
+            renderTasks();
+            taskInput.value = '';
+            Utils.showToast('✓ Tâche ajoutée !', 'success');
+        }
+
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function deleteTask(id) {
+            if (confirm('Supprimer cette tâche ?')) {
+                tasks = tasks.filter(t => t.id !== id);
+                saveTasks();
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksList');
+            
+            if (tasks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Aucune tâche pour le moment. Ajoute-en une !</p>';
+                return;
+            }
+            
+            // Grouper par priorité
+            const grouped = {
+                haute: tasks.filter(t => t.priority === 'haute' && !t.completed),
+                moyenne: tasks.filter(t => t.priority === 'moyenne' && !t.completed),
+                basse: tasks.filter(t => t.priority === 'basse' && !t.completed),
+                someday: tasks.filter(t => t.priority === 'someday' && !t.completed),
+                completed: tasks.filter(t => t.completed)
+            };
+            
+            container.innerHTML = `
+                ${grouped.haute.length ? '<h3 style="color: #FF6B6B; margin: 20px 0 10px;">🔴 Haute priorité</h3>' : ''}
+                ${grouped.haute.map(task => createTaskHTML(task)).join('')}
+                
+                ${grouped.moyenne.length ? '<h3 style="color: #FFB84D; margin: 20px 0 10px;">🟡 Moyenne priorité</h3>' : ''}
+                ${grouped.moyenne.map(task => createTaskHTML(task)).join('')}
+                
+                ${grouped.basse.length ? '<h3 style="color: #51CF66; margin: 20px 0 10px;">🟢 Basse priorité</h3>' : ''}
+                ${grouped.basse.map(task => createTaskHTML(task)).join('')}
+                
+                ${grouped.someday.length ? '<h3 style="color: #4ECDC4; margin: 20px 0 10px;">🔵 Un jour...</h3>' : ''}
+                ${grouped.someday.map(task => createTaskHTML(task)).join('')}
+                
+                ${grouped.completed.length ? '<h3 style="color: #999; margin: 20px 0 10px;">✓ Complétées</h3>' : ''}
+                ${grouped.completed.map(task => createTaskHTML(task)).join('')}
+            `;
+        }
+
+        function createTaskHTML(task) {
+            return `
+                <div class="task-item priority-${task.priority} ${task.completed ? 'completed' : ''}">
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')">
+                    <span style="flex: 1;">${task.text}</span>
+                    <button onclick="deleteTask('${task.id}')" style="background: #FF6B6B; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer;">🗑</button>
+                </div>
+            `;
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tdah_tasks', JSON.stringify(tasks));
+        }
+
+        function updateStats() {
+            const completed = tasks.filter(t => t.completed).length;
+            const pending = tasks.filter(t => !t.completed).length;
+            
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('pendingCount').textContent = pending;
+        }
+
+        // SÉQUENTIEL (code déjà fourni précédemment - je l'intègre)
+        let sequentialSteps = [];
+        let stepCounter = 0;
+
+        function addSequentialStep() {
+            stepCounter++;
+            const stepId = 'step-' + stepCounter;
+            
+            sequentialSteps.push({
+                id: stepId,
+                text: '',
+                image: null,
+                imageData: null
+            });
+            
+            renderSequentialSteps();
+        }
+
+        function renderSequentialSteps() {
+            const container = document.getElementById('sequentialSteps');
+            
+            if (sequentialSteps.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Clique sur "Ajouter une étape" pour commencer !</p>';
+                return;
+            }
+            
+            container.innerHTML = sequentialSteps.map((step, index) => `
+                <div style="background: #F8F9FA; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <div style="background: var(--tdah-color); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem;">${index + 1}</div>
+                        <input type="text" placeholder="Décris cette étape" value="${step.text}" onchange="updateStepText('${step.id}', this.value)" style="flex: 1;">
+                        <button onclick="deleteStep('${step.id}')" style="background: #FF6B6B; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">🗑</button>
+                    </div>
+                    <label for="image-${step.id}" class="btn btn-success" style="display: inline-block; cursor: pointer;">
+                        📷 ${step.imageData ? 'Changer' : 'Ajouter'} une image
+                        <input type="file" id="image-${step.id}" accept="image/*" onchange="uploadStepImage('${step.id}', this)" style="display: none;">
+                    </label>
+                    ${step.imageData ? `<img src="${step.imageData}" style="height: 80px; border-radius: 8px; margin-left: 15px;">` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateStepText(stepId, text) {
+            const step = sequentialSteps.find(s => s.id === stepId);
+            if (step) step.text = text;
+        }
+
+        function uploadStepImage(stepId, input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const step = sequentialSteps.find(s => s.id === stepId);
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                step.imageData = e.target.result;
+                renderSequentialSteps();
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function deleteStep(stepId) {
+            if (confirm('Supprimer cette étape ?')) {
+                sequentialSteps = sequentialSteps.filter(s => s.id !== stepId);
+                renderSequentialSteps();
+            }
+        }
+
+        function clearSequential() {
+            if (confirm('Effacer tout ?')) {
+                sequentialSteps = [];
+                stepCounter = 0;
+                document.getElementById('sequentialTitle').value = '';
+                renderSequentialSteps();
+            }
+        }
+
+        async function generateSequentialPDF() {
+            const title = document.getElementById('sequentialTitle').value.trim();
+            
+            if (!title || sequentialSteps.length === 0) {
+                Utils.showToast('❌ Ajoute un titre et des étapes !', 'error');
+                return;
+            }
+            
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.setFontSize(24);
+                doc.setFont(undefined, 'bold');
+                doc.text(title, 105, 20, { align: 'center' });
+                
+                let yPosition = 40;
+                
+                for (let i = 0; i < sequentialSteps.length; i++) {
+                    const step = sequentialSteps[i];
+                    
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                    
+                    doc.setFillColor(255, 107, 107);
+                    doc.circle(25, yPosition, 8, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(14);
+                    doc.text(String(i + 1), 25, yPosition + 4, { align: 'center' });
+                    
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(step.text || 'Étape sans description', 40, yPosition + 4);
+                    
+                    if (step.imageData) {
+                        try {
+                            doc.addImage(step.imageData, 'JPEG', 150, yPosition - 15, 40, 40);
+                        } catch (e) {}
+                    }
+                    
+                    yPosition += 60;
+                }
+                
+                doc.save(title.toLowerCase().replace(/\s+/g, '-') + '.pdf');
+                Utils.showToast('✓ PDF généré !', 'success');
+                
+            } catch (error) {
+                Utils.showToast('❌ Erreur génération PDF', 'error');
+            }
+        }
+
+        // RÉSOUDRE UN PROBLÈME
+        function addSolution() {
+            const container = document.getElementById('solutionsArea');
+            const id = Utils.generateId();
+            
+            const div = document.createElement('div');
+            div.style.cssText = 'margin: 10px 0; padding: 15px; background: #f0f0f0; border-radius: 10px;';
+            div.innerHTML = `
+                <input type="text" placeholder="Décris une solution possible..." style="width: 85%; margin-right: 10px;">
+                <button onclick="this.parentElement.remove()" style="background: #FF6B6B; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer;">✕</button>
+            `;
+            
+            container.appendChild(div);
+        }
+
+        // Initialisation
+        renderTasks();
+        updateStats();
+        renderSequentialSteps();
+    </script>
+</body>
+</html>
