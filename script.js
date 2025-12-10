@@ -391,5 +391,29 @@ window.Utils = Utils;
 window.AutoSave = AutoSave;
 window.TextToSpeech = tts;
 
+// GESTION MENU DÉROULANT MON ESPACE
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.querySelector('.nav-dropdown');
+    const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+    const dropdownMenu = document.querySelector('.nav-dropdown-menu');
+    
+    if (dropdown && dropdownToggle && dropdownMenu) {
+        // Toggle au clic sur mobile
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+        });
+        
+        // Fermer si clic ailleurs
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+        
+        // Hover sur desktop (déjà géré par CSS)
+    }
+});
+
 // Initialisation au chargement
 console.log('✓ Script global chargé - SESSAD Petit Prince');
