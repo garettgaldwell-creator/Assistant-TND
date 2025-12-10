@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page introuvable - SESSAD Petit Prince</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .error-code {
+            font-size: 10rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .error-message {
+            font-size: 2rem;
+            color: var(--dark);
+            margin: 30px 0;
+        }
+        
+        .error-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .error-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .error-links a {
+            padding: 15px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .error-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card error-container">
+            <div style="margin-bottom: 30px;">
+                <img src="logo-petit-prince.webp" alt="Le Petit Prince" style="width: 150px; opacity: 0.5;">
+            </div>
+            
+            <div class="error-code">404</div>
+            
+            <h1 class="error-message">😕 Page introuvable</h1>
+            
+            <p class="error-description">
+                Oups ! On dirait que cette page s'est envolée vers une autre planète... 
+                Elle n'existe pas ou a été déplacée.
+            </p>
+            
+            <div class="error-links">
+                <a href="index.html">🏠 Retour à l'accueil</a>
+                <a href="javascript:history.back()">← Page précédente</a>
+            </div>
+            
+            <div style="margin-top: 60px; padding: 30px; background: #F0F8FF; border-radius: 20px;">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🧭 Liens rapides</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: left;">
+                    <a href="assistant-tdah.html" style="color: var(--tdah-color); font-weight: 600; text-decoration: none;">🧠 Assistant TDAH</a>
+                    <a href="assistant-tsa.html" style="color: var(--tsa-color); font-weight: 600; text-decoration: none;">🧩 Assistant TSA</a>
+                    <a href="assistant-dys.html" style="color: var(--dys-color); font-weight: 600; text-decoration: none;">📚 Assistant Dys</a>
+                    <a href="outils.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">🛠️ Outils</a>
+                    <a href="ressources.html" style="color: var(--secondary); font-weight: 600; text-decoration: none;">📖 Ressources</a>
+                    <a href="contact.html" style="color: var(--info); font-weight: 600; text-decoration: none;">📧 Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>

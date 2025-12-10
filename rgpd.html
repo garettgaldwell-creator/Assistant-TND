@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGPD - Protection des données - SESSAD Petit Prince</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>RGPD</li>
+            </ul>
+        </nav>
+
+        <div class="card">
+            <h1 class="card-title">🔒 Protection des données personnelles (RGPD)</h1>
+            
+            <div style="background: #E8F5E9; padding: 25px; border-radius: 15px; margin: 30px 0; border-left: 5px solid var(--success);">
+                <h2 style="color: var(--success); margin-bottom: 15px;">✅ Aucune donnée personnelle n'est collectée</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8;">Ce site web ne collecte, ne stocke et ne transmet <strong>aucune donnée personnelle</strong> à des serveurs externes. Toutes les données que tu crées (tâches, routines, séquentiels, etc.) restent <strong>uniquement sur ton appareil</strong>, dans le navigateur web.</p>
+            </div>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">1. Quelles données sont stockées ?</h2>
+                <p><strong>Stockage local uniquement (localStorage) :</strong></p>
+                <ul style="margin: 15px 0 15px 30px; line-height: 2;">
+                    <li>Tes tâches et listes de choses à faire</li>
+                    <li>Tes routines visuelles</li>
+                    <li>Tes séquentiels créés</li>
+                    <li>Tes préférences d'accessibilité (taille de texte, contraste, etc.)</li>
+                    <li>Tes statistiques d'utilisation locales</li>
+                </ul>
+                <p style="margin-top: 15px; background: #FFF3E0; padding: 15px; border-radius: 10px;">
+                    💡 <strong>Important :</strong> Ces données sont stockées uniquement dans ton navigateur, sur ton appareil. Elles ne sont jamais envoyées à nos serveurs ou à des tiers. Si tu changes d'appareil ou de navigateur, tes données ne seront pas transférées automatiquement.
+                </p>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">2. Services externes utilisés</h2>
+                <p>Ce site utilise certains services externes :</p>
+                
+                <h3 style="color: var(--secondary); margin: 20px 0 10px;">📦 Bibliothèques JavaScript (CDN)</h3>
+                <ul style="margin-left: 30px; line-height: 2;">
+                    <li><strong>Chart.js</strong> - Pour les graphiques statistiques (via cdn.jsdelivr.net)</li>
+                    <li><strong>jsPDF</strong> - Pour la génération de PDF (via cdnjs.cloudflare.com)</li>
+                    <li><strong>Google Fonts</strong> - Pour les polices d'écriture</li>
+                </ul>
+                <p style="margin-top: 10px; font-style: italic; color: #666;">Ces bibliothèques sont chargées depuis des serveurs externes mais ne collectent pas tes données personnelles.</p>
+                
+                <h3 style="color: var(--secondary); margin: 20px 0 10px;">📸 API Dropl (Extraction de texte)</h3>
+                <p><strong>Uniquement dans l'Assistant Dys :</strong></p>
+                <ul style="margin-left: 30px; line-height: 2;">
+                    <li>Lorsque tu uploades une image pour extraire du texte, l'image est envoyée à l'API Dropl (https://api.dropl.fr)</li>
+                    <li>Cette API extrait le texte de l'image puis te le renvoie</li>
+                    <li>Nous n'avons aucun contrôle sur le traitement de Dropl</li>
+                    <li>Cette fonctionnalité est <strong>optionnelle</strong> et activée uniquement quand tu choisis d'uploader une image</li>
+                </ul>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">3. Cookies</h2>
+                <p><strong>Ce site n'utilise aucun cookie.</strong></p>
+                <p style="margin-top: 15px;">Le stockage local (localStorage) du navigateur est utilisé pour sauvegarder tes préférences et tes données, mais il ne s'agit pas de cookies au sens du RGPD. Ces données ne quittent jamais ton appareil.</p>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">4. Tes droits RGPD</h2>
+                <p>Même si nous ne collectons pas de données personnelles, tu as les droits suivants concernant les données stockées localement sur ton appareil :</p>
+                <ul style="margin: 15px 0 15px 30px; line-height: 2;">
+                    <li><strong>Droit d'accès :</strong> Tu peux consulter toutes tes données en ouvrant les outils développeur de ton navigateur (F12)</li>
+                    <li><strong>Droit de suppression :</strong> Tu peux effacer tes données à tout moment via les paramètres de ton navigateur ou en cliquant sur les boutons "Effacer" dans les outils</li>
+                    <li><strong>Droit à la portabilité :</strong> Tu peux exporter tes données (certains outils permettent de télécharger en PDF ou TXT)</li>
+                </ul>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">5. Comment supprimer mes données ?</h2>
+                
+                <h3 style="color: var(--secondary); margin: 20px 0 10px;">Option 1 : Via les boutons du site</h3>
+                <p>Chaque outil propose des boutons pour effacer les données (ex: "Tout effacer", "Supprimer", etc.)</p>
+                
+                <h3 style="color: var(--secondary); margin: 20px 0 10px;">Option 2 : Via ton navigateur</h3>
+                <p><strong>Google Chrome / Edge :</strong></p>
+                <ol style="margin-left: 30px; line-height: 2;">
+                    <li>Paramètres > Confidentialité et sécurité</li>
+                    <li>Effacer les données de navigation</li>
+                    <li>Cocher "Cookies et autres données de site"</li>
+                    <li>Sélectionner la période et valider</li>
+                </ol>
+                
+                <p style="margin-top: 15px;"><strong>Firefox :</strong></p>
+                <ol style="margin-left: 30px; line-height: 2;">
+                    <li>Paramètres > Vie privée et sécurité</li>
+                    <li>Cookies et données de sites</li>
+                    <li>Effacer les données</li>
+                </ol>
+                
+                <p style="margin-top: 15px;"><strong>Safari :</strong></p>
+                <ol style="margin-left: 30px; line-height: 2;">
+                    <li>Préférences > Confidentialité</li>
+                    <li>Gérer les données de sites web</li>
+                    <li>Supprimer</li>
+                </ol>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">6. Hébergement</h2>
+                <p><strong>Hébergeur :</strong> GitHub Pages (GitHub, Inc.)</p>
+                <p><strong>Politique de confidentialité de GitHub :</strong> <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color: var(--primary);">https://docs.github.com/privacy</a></p>
+                <p style="margin-top: 15px;">GitHub peut collecter des données techniques de navigation (adresse IP, type de navigateur, pages visitées) à des fins de statistiques serveur, mais nous n'avons pas accès à ces données.</p>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">7. Contact</h2>
+                <p>Pour toute question concernant la protection de tes données, tu peux nous contacter via la <a href="contact.html" style="color: var(--primary); font-weight: 600;">page de contact</a>.</p>
+            </section>
+
+            <section style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary); margin-bottom: 15px;">8. Modifications de cette politique</h2>
+                <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Les modifications seront publiées sur cette page avec la date de mise à jour.</p>
+            </section>
+
+            <div style="background: #E3F2FD; padding: 25px; border-radius: 15px; margin-top: 40px; text-align: center;">
+                <h3 style="color: var(--info); margin-bottom: 15px;">🔒 En résumé</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8;"><strong>Tes données restent chez toi, sur ton appareil.</strong> Nous ne collectons rien, ne vendons rien, ne partageons rien. Ce site est conçu pour respecter ta vie privée au maximum.</p>
+            </div>
+
+            <p style="margin-top: 40px; text-align: center; color: #666; font-style: italic;">Dernière mise à jour : Décembre 2024</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>

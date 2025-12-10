@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Assistant TSA - Routines visuelles, scénarios sociaux et outils sensoriels">
+    <title>Assistant TSA - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .tab-btn:hover {
+            background: var(--tsa-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active {
+            background: var(--tsa-color);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        .routine-step {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--tsa-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .picto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .picto-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .picto-item:hover {
+            border-color: var(--tsa-color);
+            transform: scale(1.05);
+        }
+        
+        .picto-item.selected {
+            border-color: var(--tsa-color);
+            background: #F3E5F5;
+        }
+        
+        .emotion-thermometer {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to top, #51CF66 0%, #FFE66D 25%, #FFB84D 50%, #FF8C42 75%, #FF6B6B 100%);
+            border-radius: 20px;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .thermometer-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 4px solid var(--tsa-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sensory-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--tsa-color);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html" class="active">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Fil d'Ariane -->
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Assistant TSA</li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <div class="card" style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; animation: float 3s ease-in-out infinite;">
+                <img src="logo-petit-prince.webp" alt="Le Petit Prince" style="width: 100px; height: auto; margin-bottom: 20px;">
+            </div>
+            <h1 class="card-title" style="color: var(--tsa-color); font-size: 2.5rem;">🧩 Mon Assistant TSA</h1>
+            <p style="font-size: 1.2rem; color: #666;">Routines visuelles, scénarios sociaux et outils sensoriels</p>
+        </div>
+
+        <!-- Onglets -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('routines')">📅 Routines Visuelles</button>
+            <button class="tab-btn" onclick="switchTab('scenarios')">💬 Scénarios Sociaux</button>
+            <button class="tab-btn" onclick="switchTab('emotions')">😊 Mes Émotions</button>
+            <button class="tab-btn" onclick="switchTab('sensory')">🎨 Gestion Sensorielle</button>
+            <button class="tab-btn" onclick="switchTab('pictos')">🖼️ Pictogrammes</button>
+            <button class="tab-btn" onclick="switchTab('planning')">📊 Planning Visuel</button>
+        </div>
+
+        <!-- ROUTINES VISUELLES -->
+        <div id="routines" class="tab-content active">
+            <div class="card">
+                <h2 class="card-title">📅 Créer une Routine Visuelle</h2>
+                <p>Construis des routines étape par étape avec des images pour structurer ton quotidien.</p>
+                
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">Choisis un type de routine :</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <button onclick="loadRoutineTemplate('matin')" class="btn btn-primary">🌅 Routine du matin</button>
+                        <button onclick="loadRoutineTemplate('toilette')" class="btn btn-primary">🚿 Routine de toilette</button>
+                        <button onclick="loadRoutineTemplate('coucher')" class="btn btn-primary">🌙 Routine du coucher</button>
+                        <button onclick="loadRoutineTemplate('repas')" class="btn btn-primary">🍽️ Routine des repas</button>
+                        <button onclick="loadRoutineTemplate('custom')" class="btn btn-success">➕ Routine personnalisée</button>
+                    </div>
+                </div>
+
+                <div id="routineBuilder" style="margin: 30px 0; display: none;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">✏️ Ma routine :</h3>
+                    <input type="text" id="routineName" placeholder="Nom de ma routine..." style="margin-bottom: 20px;">
+                    <div id="routineSteps"></div>
+                    <button onclick="addRoutineStep()" class="btn btn-success" style="margin: 15px 0;">➕ Ajouter une étape</button>
+                    <button onclick="saveRoutine()" class="btn btn-info">💾 Sauvegarder</button>
+                    <button onclick="printRoutine()" class="btn btn-primary">🖨️ Imprimer</button>
+                </div>
+
+                <div id="savedRoutines" style="margin-top: 30px;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">📚 Mes routines sauvegardées :</h3>
+                    <div id="routinesList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCÉNARIOS SOCIAUX -->
+        <div id="scenarios" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">💬 Scénarios Sociaux</h2>
+                <p>Prépare-toi aux situations sociales avec des scénarios simples et illustrés.</p>
+                
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">Choisis une situation :</h3>
+                    <select id="scenarioSelect" onchange="loadScenario(this.value)" style="width: 100%; margin-bottom: 20px;">
+                        <option value="">-- Sélectionne un scénario --</option>
+                        <option value="saluer">👋 Dire bonjour / au revoir</option>
+                        <option value="partager">🤝 Partager un jouet</option>
+                        <option value="demander">🙋 Demander de l'aide</option>
+                        <option value="attendre">⏰ Attendre son tour</option>
+                        <option value="refuser">🙅 Dire non poliment</option>
+                        <option value="excuser">😔 S'excuser</option>
+                        <option value="table">🍽️ Manger à table</option>
+                        <option value="jeu">🎮 Jouer avec les autres</option>
+                    </select>
+                </div>
+
+                <div id="scenarioContent" style="background: #F3E5F5; padding: 30px; border-radius: 15px; display: none;">
+                    <h3 id="scenarioTitle" style="color: var(--tsa-color); margin-bottom: 20px;"></h3>
+                    <div id="scenarioSteps"></div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button onclick="createCustomScenario()" class="btn btn-success">➕ Créer mon propre scénario</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉMOTIONS -->
+        <div id="emotions" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">😊 Comprendre mes émotions</h2>
+                <p>Utilise le thermomètre des émotions pour identifier ce que tu ressens.</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; margin: 30px 0;">
+                    <div class="emotion-thermometer" onclick="selectEmotionLevel(event)">
+                        <div class="thermometer-marker" id="emotionMarker" style="bottom: 50%;">😐</div>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: var(--tsa-color); margin-bottom: 20px;">Mon niveau d'émotion :</h3>
+                        <div id="emotionFeedback" style="background: white; padding: 25px; border-radius: 15px; min-height: 200px;">
+                            <p style="text-align: center; color: #999;">Clique sur le thermomètre pour indiquer comment tu te sens</p>
+                        </div>
+                        
+                        <h3 style="color: var(--tsa-color); margin: 30px 0 15px;">💡 Que faire ?</h3>
+                        <div id="emotionStrategies" style="background: #E8F5E9; padding: 20px; border-radius: 15px;"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">🎭 Cartes d'émotions</h3>
+                    <div class="picto-grid">
+                        <div class="picto-item" onclick="selectEmotion('joyeux')">
+                            <div style="font-size: 3rem;">😊</div>
+                            <div>Joyeux</div>
+                        </div>
+                        <div class="picto-item" onclick="selectEmotion('triste')">
+                            <div style="font-size: 3rem;">😢</div>
+                            <div>Triste</div>
+                        </div>
+                        <div class="picto-item" onclick="selectEmotion('peur')">
+                            <div style="font-size: 3rem;">😰</div>
+                            <div>Peur</div>
+                        </div>
+                        <div class="picto-item" onclick="selectEmotion('colere')">
+                            <div style="font-size: 3rem;">😠</div>
+                            <div>En colère</div>
+                        </div>
+                        <div class="picto-item" onclick="selectEmotion('fatigue')">
+                            <div style="font-size: 3rem;">😴</div>
+                            <div>Fatigué</div>
+                        </div>
+                        <div class="picto-item" onclick="selectEmotion('excite')">
+                            <div style="font-size: 3rem;">🤩</div>
+                            <div>Excité</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GESTION SENSORIELLE -->
+        <div id="sensory" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🎨 Gestion Sensorielle</h2>
+                <p>Identifie tes besoins sensoriels et trouve des solutions adaptées.</p>
+                
+                <div style="margin: 30px 0;">
+                    <div class="sensory-card">
+                        <h3 style="color: var(--tsa-color); margin-bottom: 15px;">⚠️ Signes de surcharge sensorielle</h3>
+                        <ul style="line-height: 2; margin-left: 30px;">
+                            <li>Je me sens dépassé, tout est trop</li>
+                            <li>J'ai besoin de m'isoler</li>
+                            <li>Les bruits me dérangent beaucoup</li>
+                            <li>Je me bouche les oreilles</li>
+                            <li>Je suis irritable ou agité</li>
+                        </ul>
+                        <button onclick="showSensoryHelp('overload')" class="btn btn-danger" style="margin-top: 15px;">🆘 J'ai besoin d'aide maintenant</button>
+                    </div>
+
+                    <div class="sensory-card">
+                        <h3 style="color: var(--tsa-color); margin-bottom: 15px;">👂 Sensibilité auditive</h3>
+                        <p><strong>Ce qui m'aide :</strong></p>
+                        <ul style="line-height: 2; margin: 15px 0 15px 30px;">
+                            <li>🎧 Casque anti-bruit ou écouteurs</li>
+                            <li>🎵 Musique douce ou bruits blancs</li>
+                            <li>🚪 M'isoler dans un endroit calme</li>
+                            <li>⏰ Prévenir à l'avance des bruits forts</li>
+                        </ul>
+                    </div>
+
+                    <div class="sensory-card">
+                        <h3 style="color: var(--tsa-color); margin-bottom: 15px;">👁️ Sensibilité visuelle</h3>
+                        <p><strong>Ce qui m'aide :</strong></p>
+                        <ul style="line-height: 2; margin: 15px 0 15px 30px;">
+                            <li>🕶️ Lunettes de soleil ou filtre coloré</li>
+                            <li>💡 Lumière douce, éviter le néon</li>
+                            <li>📱 Réduire la luminosité des écrans</li>
+                            <li>🎨 Environnement épuré, rangé</li>
+                        </ul>
+                    </div>
+
+                    <div class="sensory-card">
+                        <h3 style="color: var(--tsa-color); margin-bottom: 15px;">🤗 Sensibilité tactile</h3>
+                        <p><strong>Ce qui m'aide :</strong></p>
+                        <ul style="line-height: 2; margin: 15px 0 15px 30px;">
+                            <li>👕 Vêtements doux, sans étiquettes</li>
+                            <li>🧸 Objet réconfortant (doudou, fidget)</li>
+                            <li>⏰ Prévenir avant un contact physique</li>
+                            <li>🛌 Couverture lestée si besoin</li>
+                        </ul>
+                    </div>
+
+                    <div class="sensory-card">
+                        <h3 style="color: var(--tsa-color); margin-bottom: 15px;">🏃 Besoin de bouger</h3>
+                        <p><strong>Activités proprioceptives :</strong></p>
+                        <ul style="line-height: 2; margin: 15px 0 15px 30px;">
+                            <li>🤸 Sauter, courir, grimper</li>
+                            <li>💪 Pousser/tirer des objets lourds</li>
+                            <li>🧘 Yoga ou étirements</li>
+                            <li>🎈 Ballon de gym, trampoline</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="sensoryPlan" style="background: #FFF3E0; padding: 25px; border-radius: 15px; margin-top: 30px; display: none;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">🆘 Plan d'urgence - Surcharge sensorielle</h3>
+                    <ol style="line-height: 2.5; font-size: 1.1rem; margin-left: 30px;">
+                        <li><strong>PAUSE</strong> - Je m'éloigne de la situation</li>
+                        <li><strong>CALME</strong> - Je trouve un endroit tranquille</li>
+                        <li><strong>RESPIRE</strong> - Je respire lentement (4 temps)</li>
+                        <li><strong>APAISE</strong> - J'utilise mes outils (casque, doudou, musique)</li>
+                        <li><strong>AIDE</strong> - Je demande de l'aide si besoin</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- PICTOGRAMMES -->
+        <div id="pictos" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🖼️ Banque de Pictogrammes</h2>
+                <p>Utilise des images pour communiquer tes besoins, tes choix et tes émotions.</p>
+                
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">Catégories :</h3>
+                    <select id="pictoCategory" onchange="loadPictos(this.value)" style="width: 100%; margin-bottom: 20px;">
+                        <option value="">-- Choisis une catégorie --</option>
+                        <option value="besoins">💭 Mes besoins</option>
+                        <option value="emotions">😊 Mes émotions</option>
+                        <option value="activites">🎮 Activités</option>
+                        <option value="lieux">🏠 Lieux</option>
+                        <option value="personnes">👨‍👩‍👧 Personnes</option>
+                        <option value="oui-non">✓✗ Oui / Non / Je ne sais pas</option>
+                    </select>
+                </div>
+
+                <div id="pictosGrid" class="picto-grid"></div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #E3F2FD; border-radius: 15px;">
+                    <h3 style="color: var(--tsa-color); margin-bottom: 15px;">💡 Comment utiliser les pictogrammes ?</h3>
+                    <p style="line-height: 1.8;">Les pictogrammes sont des images qui aident à communiquer sans paroles. Tu peux les montrer du doigt pour dire ce que tu veux, ce dont tu as besoin, ou comment tu te sens. C'est particulièrement utile quand tu as du mal à trouver les mots.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLANNING VISUEL -->
+        <div id="planning" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">📊 Mon Planning Visuel</h2>
+                <p>Organise ta journée ou ta semaine avec un planning visuel clair.</p>
+                
+                <div style="margin: 30px 0;">
+                    <button onclick="createDailyPlanning()" class="btn btn-primary" style="margin-right: 15px;">📅 Planning du jour</button>
+                    <button onclick="createWeeklyPlanning()" class="btn btn-info">📆 Planning de la semaine</button>
+                </div>
+
+                <div id="planningContent" style="margin-top: 30px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <ul>
+                    <li><a href="assistant-tdah.html">Assistant TDAH</a></li>
+                    <li><a href="assistant-tsa.html">Assistant TSA</a></li>
+                    <li><a href="assistant-dys.html">Assistant Dys</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+
+    <script src="script.js"></script>
+    <script>
+        // ROUTINES
+        let routines = JSON.parse(localStorage.getItem('tsa_routines')) || [];
+        
+        function loadRoutineTemplate(type) {
+            document.getElementById('routineBuilder').style.display = 'block';
+            const templates = {
+                matin: ['Me réveiller', 'Aller aux toilettes', 'Me laver le visage', 'M\'habiller', 'Prendre mon petit-déjeuner', 'Me brosser les dents', 'Préparer mon sac'],
+                toilette: ['Aller aux toilettes', 'Tirer la chasse', 'Me laver les mains avec du savon', 'Sécher mes mains'],
+                coucher: ['Ranger mes jouets', 'Prendre mon bain/douche', 'Mettre mon pyjama', 'Me brosser les dents', 'Lire une histoire', 'Aller au lit'],
+                repas: ['Me laver les mains', 'M\'asseoir à table', 'Attendre que tout le monde soit servi', 'Manger proprement', 'Débarrasser mon assiette'],
+                custom: []
+            };
+            
+            document.getElementById('routineName').value = type === 'custom' ? '' : 'Routine ' + type;
+            // Initialiser avec le template
+        }
+
+        function addRoutineStep() {
+            Utils.showToast('Fonctionnalité en cours de développement', 'info');
+        }
+
+        function saveRoutine() {
+            Utils.showToast('✓ Routine sauvegardée !', 'success');
+        }
+
+        function printRoutine() {
+            window.print();
+        }
+
+        // SCÉNARIOS SOCIAUX
+        const scenarios = {
+            saluer: {
+                title: '👋 Dire bonjour / au revoir',
+                steps: [
+                    '1️⃣ Je regarde la personne',
+                    '2️⃣ Je souris si possible',
+                    '3️⃣ Je dis "Bonjour" ou "Au revoir"',
+                    '4️⃣ Je peux faire un signe de la main',
+                    '💡 Je n\'ai pas besoin de faire la bise si je ne veux pas'
+                ]
+            },
+            partager: {
+                title: '🤝 Partager un jouet',
+                steps: [
+                    '1️⃣ Je joue avec mon jouet',
+                    '2️⃣ Quelqu\'un me demande de partager',
+                    '3️⃣ Je peux dire "D\'accord, tu peux jouer avec"',
+                    '4️⃣ Ou "Pas maintenant, tu pourras après"',
+                    '💡 C\'est ok de ne pas vouloir partager tout de suite'
+                ]
+            },
+            demander: {
+                title: '🙋 Demander de l\'aide',
+                steps: [
+                    '1️⃣ J\'ai besoin d\'aide',
+                    '2️⃣ Je lève la main ou je m\'approche',
+                    '3️⃣ J\'attends que la personne soit disponible',
+                    '4️⃣ Je dis "Excusez-moi, j\'ai besoin d\'aide"',
+                    '5️⃣ J\'explique mon problème',
+                    '💡 Demander de l\'aide c\'est bien, pas besoin d\'attendre'
+                ]
+            },
+            attendre: {
+                title: '⏰ Attendre son tour',
+                steps: [
+                    '1️⃣ Je me mets dans la file ou j\'attends',
+                    '2️⃣ Je regarde qui est devant moi',
+                    '3️⃣ Je patiente sans pousser',
+                    '4️⃣ C\'est bientôt mon tour !',
+                    '💡 Si c\'est long, je peux compter ou penser à autre chose'
+                ]
+            }
+        };
+
+        function loadScenario(type) {
+            if (!type) return;
+            
+            const scenario = scenarios[type];
+            document.getElementById('scenarioContent').style.display = 'block';
+            document.getElementById('scenarioTitle').textContent = scenario.title;
+            document.getElementById('scenarioSteps').innerHTML = scenario.steps.map(step => 
+                `<div style="background: white; padding: 20px; margin: 15px 0; border-radius: 12px; border-left: 5px solid var(--tsa-color); font-size: 1.1rem;">${step}</div>`
+            ).join('');
+        }
+
+        function createCustomScenario() {
+            Utils.showToast('Fonctionnalité en cours de développement', 'info');
+        }
+
+        // ÉMOTIONS
+        function selectEmotionLevel(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const y = event.clientY - rect.top;
+            const percentage = ((rect.height - y) / rect.height) * 100;
+            
+            const marker = document.getElementById('emotionMarker');
+            marker.style.bottom = percentage + '%';
+            
+            let level, emoji, feedback, strategies;
+            
+            if (percentage < 20) {
+                level = 'Très calme';
+                emoji = '😌';
+                feedback = 'Tu te sens très calme et détendu.';
+                strategies = 'Continue ce qui te fait du bien !';
+            } else if (percentage < 40) {
+                level = 'Calme';
+                emoji = '🙂';
+                feedback = 'Tu te sens bien et serein.';
+                strategies = 'Profite de ce moment agréable.';
+            } else if (percentage < 60) {
+                level = 'Un peu tendu';
+                emoji = '😐';
+                feedback = 'Tu commences à ressentir un peu de tension.';
+                strategies = 'Prends quelques respirations profondes.';
+            } else if (percentage < 80) {
+                level = 'Stressé';
+                emoji = '😰';
+                feedback = 'Tu es stressé, c\'est difficile.';
+                strategies = 'Pause, respire, utilise tes outils (casque, doudou).';
+            } else {
+                level = 'Très stressé';
+                emoji = '😱';
+                feedback = 'Tu es en surcharge, c\'est le moment de t\'arrêter !';
+                strategies = '🆘 STOP : Quitte la situation, va dans un endroit calme, respire, demande de l\'aide.';
+            }
+            
+            marker.textContent = emoji;
+            document.getElementById('emotionFeedback').innerHTML = `
+                <h3 style="color: var(--tsa-color); margin-bottom: 15px;">${emoji} ${level}</h3>
+                <p style="font-size: 1.2rem; line-height: 1.8;">${feedback}</p>
+            `;
+            document.getElementById('emotionStrategies').innerHTML = `<p style="font-size: 1.1rem; line-height: 1.8;">${strategies}</p>`;
+        }
+
+        function selectEmotion(emotion) {
+            Utils.showToast(`Tu te sens ${emotion}`, 'info');
+        }
+
+        // SENSORIEL
+        function showSensoryHelp(type) {
+            document.getElementById('sensoryPlan').style.display = 'block';
+            document.getElementById('sensoryPlan').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // PICTOGRAMMES
+        const pictosData = {
+            besoins: [
+                { emoji: '💧', text: 'Boire' },
+                { emoji: '🍽️', text: 'Manger' },
+                { emoji: '🚽', text: 'Toilettes' },
+                { emoji: '😴', text: 'Repos' },
+                { emoji: '🤗', text: 'Câlin' },
+                { emoji: '🔇', text: 'Silence' },
+                { emoji: '🏃', text: 'Bouger' },
+                { emoji: '🆘', text: 'Aide' }
+            ],
+            emotions: [
+                { emoji: '😊', text: 'Content' },
+                { emoji: '😢', text: 'Triste' },
+                { emoji: '😰', text: 'Peur' },
+                { emoji: '😠', text: 'Colère' },
+                { emoji: '😴', text: 'Fatigué' },
+                { emoji: '🤩', text: 'Excité' }
+            ],
+            'oui-non': [
+                { emoji: '✓', text: 'OUI' },
+                { emoji: '✗', text: 'NON' },
+                { emoji: '❓', text: 'Je ne sais pas' }
+            ]
+        };
+
+        function loadPictos(category) {
+            if (!category || !pictosData[category]) {
+                document.getElementById('pictosGrid').innerHTML = '';
+                return;
+            }
+            
+            const pictos = pictosData[category];
+            document.getElementById('pictosGrid').innerHTML = pictos.map(p => `
+                <div class="picto-item" onclick="selectPicto('${p.text}')">
+                    <div style="font-size: 3rem;">${p.emoji}</div>
+                    <div style="font-weight: 600; margin-top: 8px;">${p.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectPicto(text) {
+            Utils.showToast(`Sélectionné : ${text}`, 'success');
+        }
+
+        // PLANNING
+        function createDailyPlanning() {
+            Utils.showToast('Fonctionnalité en cours de développement', 'info');
+        }
+
+        function createWeeklyPlanning() {
+            Utils.showToast('Fonctionnalité en cours de développement', 'info');
+        }
+    </script>
+</body>
+</html>
