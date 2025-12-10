@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bibliothèque de pictogrammes ARASAAC - Recherche et téléchargement de pictogrammes">
+    <title>Pictogrammes ARASAAC - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .search-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-box input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .search-box button {
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            padding: 15px;
+            background: white;
+            border: 2px solid var(--tsa-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--tsa-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .picto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .picto-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        
+        .picto-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--tsa-color);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .picto-card.selected {
+            border-color: var(--success);
+            background: #E8F5E9;
+        }
+        
+        .picto-img {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .picto-label {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .selection-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--success);
+            color: white;
+            padding: 20px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .selection-bar.visible {
+            display: flex;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li><a href="outils.html">Outils</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Pictogrammes ARASAAC</li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <div class="card" style="text-align: center; margin-bottom: 30px;">
+            <h1 class="card-title" style="font-size: 2.5rem;">🖼️ Bibliothèque de Pictogrammes</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Recherche, sélectionne et télécharge des pictogrammes gratuits de la base ARASAAC pour créer tes supports de communication
+            </p>
+        </div>
+
+        <!-- Recherche -->
+        <div class="search-section">
+            <h2 style="color: white; margin-bottom: 10px;">🔍 Rechercher un pictogramme</h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;">Entre un mot en français pour trouver le pictogramme correspondant</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Ex: manger, dormir, école, content..." onkeypress="if(event.key==='Enter') searchPictos()">
+                <button onclick="searchPictos()">🔍 Rechercher</button>
+            </div>
+        </div>
+
+        <!-- Catégories prédéfinies -->
+        <div class="card">
+            <h2 class="card-title">📁 Catégories Populaires</h2>
+            <p>Clique sur une catégorie pour voir les pictogrammes les plus utilisés</p>
+            
+            <div class="categories">
+                <button class="category-btn" onclick="searchCategory('émotions')">😊 Émotions</button>
+                <button class="category-btn" onclick="searchCategory('actions')">🏃 Actions</button>
+                <button class="category-btn" onclick="searchCategory('nourriture')">🍎 Nourriture</button>
+                <button class="category-btn" onclick="searchCategory('famille')">👨‍👩‍👧 Famille</button>
+                <button class="category-btn" onclick="searchCategory('école')">🏫 École</button>
+                <button class="category-btn" onclick="searchCategory('maison')">🏠 Maison</button>
+                <button class="category-btn" onclick="searchCategory('vêtements')">👕 Vêtements</button>
+                <button class="category-btn" onclick="searchCategory('animaux')">🐶 Animaux</button>
+                <button class="category-btn" onclick="searchCategory('jouets')">🧸 Jouets</button>
+                <button class="category-btn" onclick="searchCategory('transport')">🚗 Transports</button>
+                <button class="category-btn" onclick="searchCategory('corps')">👤 Corps</button>
+                <button class="category-btn" onclick="searchCategory('temps')">⏰ Temps</button>
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 class="card-title" style="margin: 0;">📋 Résultats</h2>
+                    <p id="resultsCount" style="color: #666; margin-top: 5px;">Recherche un mot ou choisis une catégorie</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="selectAll()" class="btn btn-info">✓ Tout sélectionner</button>
+                    <button onclick="deselectAll()" class="btn" style="background: #666; color: white;">✗ Tout désélectionner</button>
+                </div>
+            </div>
+            
+            <div id="loadingIndicator" class="loading" style="display: none;">
+                <div style="font-size: 3rem; margin-bottom: 15px;">⏳</div>
+                <p>Recherche en cours...</p>
+            </div>
+            
+            <div id="pictosContainer" class="picto-grid"></div>
+            
+            <div id="noResults" style="display: none; text-align: center; padding: 60px; color: #999;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">🔍</div>
+                <h3 style="color: #666; margin-bottom: 10px;">Aucun résultat trouvé</h3>
+                <p>Essaie avec un autre mot ou une autre orthographe</p>
+            </div>
+        </div>
+
+        <!-- Aide -->
+        <div class="card" style="background: #FFF3E0; border: 2px solid var(--warning);">
+            <h3 style="color: var(--warning); margin-bottom: 15px;">💡 Comment utiliser les pictogrammes ?</h3>
+            <ul style="line-height: 2; margin-left: 30px;">
+                <li><strong>Recherche :</strong> Entre un mot simple en français</li>
+                <li><strong>Sélection :</strong> Clique sur les pictogrammes que tu veux télécharger</li>
+                <li><strong>Téléchargement :</strong> Clique sur "Télécharger" dans la barre en bas</li>
+                <li><strong>Utilisation :</strong> Imprime ou utilise dans tes documents</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic;">
+                Les pictogrammes proviennent de la base <strong>ARASAAC</strong> (www.arasaac.org) et sont sous licence Creative Commons (BY-NC-SA).
+            </p>
+        </div>
+    </div>
+
+    <!-- Barre de sélection -->
+    <div id="selectionBar" class="selection-bar">
+        <div>
+            <strong id="selectedCount">0</strong> pictogramme(s) sélectionné(s)
+        </div>
+        <div style="display: flex; gap: 15px;">
+            <button onclick="downloadSelected()" class="btn" style="background: white; color: var(--success); font-weight: 700;">
+                💾 Télécharger la sélection
+            </button>
+            <button onclick="createBoard()" class="btn" style="background: white; color: var(--info); font-weight: 700;">
+                📋 Créer une planche
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Crédits</h3>
+                <p style="font-size: 0.9rem; line-height: 1.6;">
+                    Pictogrammes sous licence CC (BY-NC-SA)<br>
+                    Auteur: Sergio Palao<br>
+                    Origine: ARASAAC (http://www.arasaac.org)
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let selectedPictos = [];
+        let currentResults = [];
+
+        // Recherche via API ARASAAC
+        async function searchPictos() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                Utils.showToast('❌ Entre un mot à rechercher', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            document.getElementById('noResults').style.display = 'none';
+            
+            try {
+                // API ARASAAC : recherche par mot en français
+                const response = await fetch(`https://api.arasaac.org/v1/pictograms/fr/search/${encodeURIComponent(query)}`);
+                
+                if (!response.ok) throw new Error('API error');
+                
+                const data = await response.json();
+                currentResults = data;
+                
+                if (data.length === 0) {
+                    document.getElementById('noResults').style.display = 'block';
+                    document.getElementById('pictosContainer').innerHTML = '';
+                } else {
+                    displayPictos(data);
+                    document.getElementById('resultsCount').textContent = `${data.length} résultat(s) trouvé(s) pour "${query}"`;
+                }
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                Utils.showToast('❌ Erreur lors de la recherche. Vérifie ta connexion.', 'error');
+                document.getElementById('noResults').style.display = 'block';
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function searchCategory(category) {
+            document.getElementById('searchInput').value = category;
+            searchPictos();
+        }
+
+        function displayPictos(pictos) {
+            const container = document.getElementById('pictosContainer');
+            
+            container.innerHTML = pictos.map(picto => `
+                <div class="picto-card" onclick="togglePicto(${picto._id})" id="picto-${picto._id}">
+                    <img src="https://api.arasaac.org/v1/pictograms/${picto._id}" 
+                         class="picto-img" 
+                         alt="${picto.keywords[0]?.keyword || 'Pictogramme'}"
+                         loading="lazy">
+                    <div class="picto-label">${picto.keywords[0]?.keyword || 'Pictogramme'}</div>
+                </div>
+            `).join('');
+        }
+
+        function togglePicto(id) {
+            const card = document.getElementById(`picto-${id}`);
+            const picto = currentResults.find(p => p._id === id);
+            
+            if (selectedPictos.find(p => p._id === id)) {
+                // Désélectionner
+                selectedPictos = selectedPictos.filter(p => p._id !== id);
+                card.classList.remove('selected');
+            } else {
+                // Sélectionner
+                selectedPictos.push(picto);
+                card.classList.add('selected');
+            }
+            
+            updateSelectionBar();
+        }
+
+        function selectAll() {
+            selectedPictos = [...currentResults];
+            document.querySelectorAll('.picto-card').forEach(card => card.classList.add('selected'));
+            updateSelectionBar();
+        }
+
+        function deselectAll() {
+            selectedPictos = [];
+            document.querySelectorAll('.picto-card').forEach(card => card.classList.remove('selected'));
+            updateSelectionBar();
+        }
+
+        function updateSelectionBar() {
+            const bar = document.getElementById('selectionBar');
+            const count = document.getElementById('selectedCount');
+            
+            count.textContent = selectedPictos.length;
+            
+            if (selectedPictos.length > 0) {
+                bar.classList.add('visible');
+            } else {
+                bar.classList.remove('visible');
+            }
+        }
+
+        async function downloadSelected() {
+            if (selectedPictos.length === 0) return;
+            
+            Utils.showToast('⏳ Téléchargement en cours...', 'info');
+            
+            // Télécharger chaque pictogramme
+            for (const picto of selectedPictos) {
+                try {
+                    const response = await fetch(`https://api.arasaac.org/v1/pictograms/${picto._id}`);
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${picto.keywords[0]?.keyword || picto._id}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    // Pause entre chaque téléchargement
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                } catch (error) {
+                    console.error('Erreur téléchargement:', error);
+                }
+            }
+            
+            Utils.showToast('✓ Téléchargement terminé !', 'success');
+        }
+
+        function createBoard() {
+            if (selectedPictos.length === 0) return;
+            
+            // Sauvegarder la sélection dans localStorage
+            localStorage.setItem('selected_pictos', JSON.stringify(selectedPictos));
+            
+            // Rediriger vers le générateur de planches
+            window.location.href = 'generateur-documents.html?type=planche-pictos';
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+            if (show) {
+                document.getElementById('pictosContainer').innerHTML = '';
+            }
+        }
+
+        // Exemples de recherche au chargement
+        window.addEventListener('load', () => {
+            const examples = ['content', 'manger', 'jouer', 'dormir'];
+            const randomExample = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('searchInput').placeholder = `Ex: ${randomExample}`;
+        });
+    </script>
+</body>
+</html>

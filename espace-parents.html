@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Parents - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .hero-parents {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .resource-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--success);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Espace Parents</li>
+            </ul>
+        </nav>
+
+        <!-- Hero -->
+        <div class="hero-parents">
+            <h1 style="font-size: 3rem; margin-bottom: 20px;">👨‍👩‍👧 Espace Parents</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95; max-width: 800px; margin: 0 auto;">
+                Ressources, guides pratiques et conseils pour accompagner votre enfant au quotidien
+            </p>
+        </div>
+
+        <!-- Guide d'utilisation -->
+        <div class="card">
+            <h2 class="card-title">📘 Guide d'Utilisation du Site</h2>
+            <p style="margin-bottom: 30px;">Découvrez comment utiliser efficacement les outils pour accompagner votre enfant.</p>
+            
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">🎯 Les 3 Assistants</h3>
+                <ul style="line-height: 2; margin-left: 30px;">
+                    <li><strong>Assistant TDAH :</strong> Gestion des tâches, séquentiels, stratégies de concentration</li>
+                    <li><strong>Assistant TSA :</strong> Routines visuelles, scénarios sociaux, pictogrammes</li>
+                    <li><strong>Assistant Dys :</strong> Adaptateur de texte, astuces pour les apprentissages</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">🛠️ Outils Clés</h3>
+                <ul style="line-height: 2; margin-left: 30px;">
+                    <li><strong>Pictogrammes ARASAAC :</strong> Recherchez et téléchargez des images pour communication</li>
+                    <li><strong>Générateur de Documents :</strong> Créez calendriers, planches de pictos, tableaux de récompenses</li>
+                    <li><strong>Séquentiels Visuels :</strong> Structurez les routines avec images et export PDF</li>
+                    <li><strong>Timer Focus :</strong> Aide à la gestion du temps (15/25/45 min)</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">💡 Conseils d'Utilisation</h3>
+                <ul style="line-height: 2; margin-left: 30px;">
+                    <li><strong>Accessibilité :</strong> Utilisez les boutons A+, Contraste et Dys en haut à droite</li>
+                    <li><strong>Lecture Audio :</strong> Chaque carte a un bouton 🔊 pour lire le contenu</li>
+                    <li><strong>Sauvegarde :</strong> Tout est sauvegardé localement dans le navigateur (pas de compte nécessaire)</li>
+                    <li><strong>Impression :</strong> Les documents générés sont optimisés pour l'impression</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Fiches Pratiques -->
+        <div class="card">
+            <h2 class="card-title">📄 Fiches Pratiques à Télécharger</h2>
+            <p style="margin-bottom: 30px;">Documents PDF à imprimer et utiliser à la maison.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🏠 Routines à la Maison</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Modèles de routines visuelles pour le matin, le soir, les repas...</p>
+                    <button onclick="generateRoutinePDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">📚 Stratégies TDAH</h3>
+                    <p style="margin-bottom: 15px; color: #666;">10 stratégies concrètes pour aider aux devoirs et à l'organisation</p>
+                    <button onclick="generateTDAHStrategiesPDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🧩 Comprendre l'Autisme</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Guide simplifié pour comprendre le TSA et adapter l'environnement</p>
+                    <button onclick="generateTSAGuidePDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">📖 Aménagements Dys</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Liste d'aménagements scolaires et adaptations pour les Dys</p>
+                    <button onclick="generateDysAdaptationsPDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">😊 Gestion des Émotions</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Outils et techniques pour aider votre enfant à gérer ses émotions</p>
+                    <button onclick="generateEmotionGuidePDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+
+                <div class="resource-card">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🎯 Contrats Éducatifs</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Modèles de contrats pour définir objectifs et récompenses</p>
+                    <button onclick="generateContractPDF()" class="download-btn">📥 Télécharger PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Parents -->
+        <div class="card">
+            <h2 class="card-title">❓ Questions Fréquentes des Parents</h2>
+            
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Comment utiliser les pictogrammes avec mon enfant ?</h3>
+                <p style="line-height: 1.8;">Les pictogrammes sont des outils de communication visuelle. Imprimez-les, plastifiez-les si possible, et utilisez-les pour :</p>
+                <ul style="margin-left: 30px; line-height: 2; margin-top: 10px;">
+                    <li>Créer un planning visuel de la journée</li>
+                    <li>Faciliter les choix (entre 2-3 options)</li>
+                    <li>Structurer une routine étape par étape</li>
+                    <li>Aider à exprimer besoins et émotions</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Mon enfant refuse d'utiliser les outils, que faire ?</h3>
+                <p style="line-height: 1.8;">C'est normal ! Voici quelques conseils :</p>
+                <ul style="margin-left: 30px; line-height: 2; margin-top: 10px;">
+                    <li>Commencez par 1 seul outil simple (ex: timer visuel)</li>
+                    <li>Montrez l'exemple en l'utilisant vous-même</li>
+                    <li>Personnalisez avec ses centres d'intérêt</li>
+                    <li>Valorisez chaque petite utilisation</li>
+                    <li>N'insistez pas si le moment n'est pas le bon</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Les données de mon enfant sont-elles sécurisées ?</h3>
+                <p style="line-height: 1.8;"><strong>Oui, totalement.</strong> Toutes les données restent dans le navigateur de votre appareil. Rien n'est envoyé à des serveurs. Si vous changez d'appareil, il faudra recréer les routines/tâches. Voir notre <a href="rgpd.html" style="color: var(--primary); font-weight: 600;">page RGPD</a> pour plus d'infos.</p>
+            </div>
+
+            <div class="resource-card">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Puis-je partager les documents créés avec l'école ?</h3>
+                <p style="line-height: 1.8;"><strong>Absolument !</strong> Tous les PDFs générés peuvent être partagés avec l'équipe enseignante, les thérapeutes, etc. C'est même recommandé pour assurer une cohérence entre la maison et l'école.</p>
+            </div>
+        </div>
+
+        <!-- Liens Utiles -->
+        <div class="card" style="background: #E8F5E9; border: 2px solid var(--success);">
+            <h2 style="color: var(--success); margin-bottom: 20px;">🔗 Liens Utiles pour les Parents</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Associations TDAH</h3>
+                    <ul style="line-height: 2;">
+                        <li>HyperSupers TDAH France</li>
+                        <li>TDAH France</li>
+                        <li>Forums et groupes de soutien</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Associations Autisme</h3>
+                    <ul style="line-height: 2;">
+                        <li>Autisme France</li>
+                        <li>AFFA (Asperger)</li>
+                        <li>CRA (Centres Ressources Autisme)</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Troubles Dys</h3>
+                    <ul style="line-height: 2;">
+                        <li>FFDys</li>
+                        <li>Apedys</li>
+                        <li>ANAPEDYS</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Aides & Droits</h3>
+                    <ul style="line-height: 2;">
+                        <li>MDPH de votre département</li>
+                        <li>PPS / PAP / PAI</li>
+                        <li>Allocations (AEEH, PCH)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Espace Professionnels -->
+        <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; text-align: center;">
+            <h2 style="color: white; margin-bottom: 20px;">👔 Vous êtes professionnel ?</h2>
+            <p style="font-size: 1.2rem; opacity: 0.95; margin-bottom: 30px;">Accédez à l'espace dédié avec des ressources spécifiques pour les accompagnants</p>
+            <a href="espace-professionnels.html" class="btn" style="background: white; color: #f5576c; font-weight: 700; font-size: 1.2rem; padding: 15px 40px;">
+                Accéder à l'Espace Professionnels →
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Génération PDFs (exemples simplifiés)
+        function generateRoutinePDF() {
+            Utils.showToast('⏳ Génération du PDF...', 'info');
+            setTimeout(() => {
+                Utils.showToast('✓ Utilisez le Générateur de Documents pour créer vos routines personnalisées !', 'success');
+                window.location.href = 'generateur-documents.html';
+            }, 1000);
+        }
+
+        function generateTDAHStrategiesPDF() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateTSAGuidePDF() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateDysAdaptationsPDF() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateEmotionGuidePDF() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateContractPDF() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+    </script>
+</body>
+</html>

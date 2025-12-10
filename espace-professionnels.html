@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Professionnels - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .login-container {
+            max-width: 500px;
+            margin: 100px auto;
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        
+        .content-pro {
+            display: none;
+        }
+        
+        .resource-pro-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #f5576c;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page de connexion -->
+    <div id="loginSection" class="login-container">
+        <div style="font-size: 4rem; margin-bottom: 20px;">👔</div>
+        <h1 style="color: #f5576c; margin-bottom: 20px;">Espace Professionnels</h1>
+        <p style="color: #666; margin-bottom: 40px; line-height: 1.8;">
+            Cet espace est réservé aux professionnels du SESSAD et partenaires.<br>
+            Entrez le code d'accès pour continuer.
+        </p>
+        
+        <input type="password" id="accessCode" placeholder="Code d'accès" style="width: 100%; padding: 15px; font-size: 1.1rem; margin-bottom: 20px; border: 2px solid #ddd; border-radius: 10px; text-align: center;">
+        
+        <button onclick="checkAccess()" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">
+            🔓 Accéder
+        </button>
+        
+        <p style="margin-top: 30px; font-size: 0.9rem; color: #999;">
+            Code d'accès par défaut : <strong>sessad2024</strong><br>
+            <em>(À modifier par l'administrateur)</em>
+        </p>
+        
+        <a href="espace-parents.html" style="display: inline-block; margin-top: 30px; color: var(--primary); text-decoration: none; font-weight: 600;">
+            ← Retour à l'Espace Parents
+        </a>
+    </div>
+
+    <!-- Contenu Professionnel (caché par défaut) -->
+    <div id="proContent" class="content-pro">
+        <div class="container">
+            <nav class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><span class="breadcrumb-separator">›</span></li>
+                    <li>Espace Professionnels</li>
+                </ul>
+            </nav>
+
+            <div class="card" style="text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; margin-bottom: 40px;">
+                <h1 style="font-size: 3rem; color: white; margin-bottom: 20px;">👔 Espace Professionnels</h1>
+                <p style="font-size: 1.3rem; opacity: 0.95;">Ressources, protocoles et outils pour les accompagnants</p>
+                <button onclick="logout()" class="btn" style="background: white; color: #f5576c; margin-top: 20px;">
+                    🚪 Se déconnecter
+                </button>
+            </div>
+
+            <!-- Guide d'Utilisation Professionnels -->
+            <div class="card">
+                <h2 class="card-title">📘 Guide pour les Professionnels</h2>
+                
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🎯 Comment utiliser ce site avec vos patients</h3>
+                    <ul style="line-height: 2; margin-left: 30px;">
+                        <li><strong>Profil adapté :</strong> Chaque assistant (TDAH/TSA/Dys) cible des besoins spécifiques</li>
+                        <li><strong>Co-création :</strong> Créez les routines/séquentiels AVEC l'enfant en séance</li>
+                        <li><strong>Export & Partage :</strong> Tous les documents sont imprimables (PDF)</li>
+                        <li><strong>Continuité :</strong> Partagez les supports avec la famille et l'école</li>
+                        <li><strong>Suivi :</strong> Utilisez les statistiques pour évaluer la progression</li>
+                    </ul>
+                </div>
+
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🛠️ Outils Clés à Utiliser en Séance</h3>
+                    <ul style="line-height: 2; margin-left: 30px;">
+                        <li><strong>Pictogrammes ARASAAC :</strong> Recherche instantanée, impression de planches personnalisées</li>
+                        <li><strong>Créateur de Scénarios Sociaux :</strong> Pour travailler les habiletés sociales (TSA)</li>
+                        <li><strong>Séquentiels Visuels :</strong> Structurer les routines (matin, devoirs, hygiène...)</li>
+                        <li><strong>Thermomètre Émotionnel :</strong> Évaluation de l'intensité émotionnelle</li>
+                        <li><strong>Adaptateur de Texte :</strong> Démonstration des aménagements Dys possibles</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Protocoles d'Intervention -->
+            <div class="card">
+                <h2 class="card-title">📋 Protocoles d'Intervention</h2>
+                
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🧠 Protocole TDAH</h3>
+                    <p style="margin-bottom: 15px;"><strong>Séance type de mise en place d'outils :</strong></p>
+                    <ol style="line-height: 2; margin-left: 30px;">
+                        <li>Évaluation des difficultés principales (attention, organisation, émotions)</li>
+                        <li>Sélection collaborative de 1-2 outils adaptés</li>
+                        <li>Création ensemble d'un séquentiel ou planning</li>
+                        <li>Explication aux parents + impression du support</li>
+                        <li>Suivi à la séance suivante : utilisation, ajustements</li>
+                    </ol>
+                    <button onclick="window.location.href='assistant-tdah.html'" class="btn btn-info" style="margin-top: 15px;">
+                        Accéder à l'Assistant TDAH →
+                    </button>
+                </div>
+
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🧩 Protocole TSA</h3>
+                    <p style="margin-bottom: 15px;"><strong>Travail sur les routines et la communication :</strong></p>
+                    <ol style="line-height: 2; margin-left: 30px;">
+                        <li>Identification d'une routine problématique (ex: matin, toilette)</li>
+                        <li>Décomposition en étapes avec l'enfant</li>
+                        <li>Recherche de pictogrammes correspondants</li>
+                        <li>Création d'une planche de routine visuelle</li>
+                        <li>Mise en place à la maison avec suivi</li>
+                    </ol>
+                    <button onclick="window.location.href='assistant-tsa.html'" class="btn btn-info" style="margin-top: 15px;">
+                        Accéder à l'Assistant TSA →
+                    </button>
+                </div>
+
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">📚 Protocole Dys</h3>
+                    <p style="margin-bottom: 15px;"><strong>Adaptation et compensation :</strong></p>
+                    <ol style="line-height: 2; margin-left: 30px;">
+                        <li>Test de différentes adaptations (police, espacement, couleur)</li>
+                        <li>Identification des paramètres les plus confortables</li>
+                        <li>Formation à l'utilisation de l'adaptateur de texte</li>
+                        <li>Liste personnalisée d'aménagements pour l'école</li>
+                        <li>Transmission à l'équipe enseignante</li>
+                    </ol>
+                    <button onclick="window.location.href='assistant-dys.html'" class="btn btn-info" style="margin-top: 15px;">
+                        Accéder à l'Assistant Dys →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fiches Techniques -->
+            <div class="card">
+                <h2 class="card-title">📄 Fiches Techniques Professionnelles</h2>
+                <p style="margin-bottom: 30px;">Documents à télécharger pour vos consultations.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">📊 Grille d'Évaluation TDAH</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Grille pour identifier les difficultés et prioriser les interventions</p>
+                        <button onclick="generateEvalGrid()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">🧩 Scénarios Sociaux Types</h3>
+                        <p style="margin-bottom: 15px; color: #666;">15 scénarios sociaux prêts à l'emploi pour TSA</p>
+                        <button onclick="generateScenarios()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">📝 Modèle de Bilan</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Template de bilan d'évolution à compléter</p>
+                        <button onclick="generateBilan()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">🎯 Objectifs SMART</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Fiche pour définir des objectifs mesurables</p>
+                        <button onclick="generateSMART()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">📋 PAI / PPS / PAP</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Guide des aménagements scolaires possibles</p>
+                        <button onclick="generatePAI()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+
+                    <div class="resource-pro-card">
+                        <h3 style="color: #f5576c; margin-bottom: 10px;">👨‍👩‍👧 Guidance Parentale</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Supports pour les entretiens avec les parents</p>
+                        <button onclick="generateGuidance()" class="btn btn-success">📥 Télécharger</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formations & Ressources -->
+            <div class="card">
+                <h2 class="card-title">🎓 Formations & Ressources Externes</h2>
+                
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">📚 Bibliographie Recommandée</h3>
+                    <ul style="line-height: 2; margin-left: 30px;">
+                        <li><strong>TDAH :</strong> "Mon cerveau a besoin de lunettes" (Dr Annick Vincent)</li>
+                        <li><strong>TSA :</strong> "L'autisme expliqué aux non-autistes" (Brigitte Harrisson)</li>
+                        <li><strong>Dys :</strong> "L'effet domino Dys" (Roselyne Guilloux)</li>
+                        <li><strong>Émotions :</strong> "La couleur des émotions" (Anna Llenas)</li>
+                    </ul>
+                </div>
+
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🔗 Sites Professionnels</h3>
+                    <ul style="line-height: 2; margin-left: 30px;">
+                        <li><strong>HAS :</strong> Recommandations de bonnes pratiques</li>
+                        <li><strong>CRAIF :</strong> Centre Ressources Autisme Île-de-France</li>
+                        <li><strong>Résodys :</strong> Réseau santé Dys</li>
+                        <li><strong>TDAH France :</strong> Association professionnelle</li>
+                    </ul>
+                </div>
+
+                <div class="resource-pro-card">
+                    <h3 style="color: #f5576c; margin-bottom: 15px;">🎥 Formations en Ligne</h3>
+                    <ul style="line-height: 2; margin-left: 30px;">
+                        <li>Canal Autisme (formations gratuites)</li>
+                        <li>MOOC Dys (Université de Lyon)</li>
+                        <li>Webinaires HyperSupers TDAH</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Notes Importantes -->
+            <div class="card" style="background: #FFF3E0; border: 2px solid var(--warning);">
+                <h3 style="color: var(--warning); margin-bottom: 15px;">⚠️ Notes Importantes</h3>
+                <ul style="line-height: 2; margin-left: 30px;">
+                    <li><strong>Confidentialité :</strong> Ce site ne stocke aucune donnée patient sur nos serveurs</li>
+                    <li><strong>RGPD :</strong> Informez les familles que les données restent sur leur appareil</li>
+                    <li><strong>Partage :</strong> Les PDFs peuvent être partagés avec les parents et l'école</li>
+                    <li><strong>Personnalisation :</strong> Tous les outils sont à adapter selon chaque profil</li>
+                    <li><strong>Évolution :</strong> Le site est mis à jour régulièrement avec de nouveaux outils</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        // Vérifier si déjà connecté
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('pro_access') === 'granted') {
+                showProContent();
+            }
+        });
+
+        function checkAccess() {
+            const code = document.getElementById('accessCode').value;
+            // Code par défaut : sessad2024 (À CHANGER en production !)
+            if (code === 'sessad2024') {
+                localStorage.setItem('pro_access', 'granted');
+                showProContent();
+                Utils.showToast('✓ Accès autorisé', 'success');
+            } else {
+                Utils.showToast('❌ Code incorrect', 'error');
+                document.getElementById('accessCode').value = '';
+            }
+        }
+
+        function showProContent() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('proContent').style.display = 'block';
+            window.scrollTo({ top: 0 });
+        }
+
+        function logout() {
+            if (confirm('Se déconnecter de l\'espace professionnels ?')) {
+                localStorage.removeItem('pro_access');
+                location.reload();
+            }
+        }
+
+        // Génération des PDFs (à implémenter selon vos besoins)
+        function generateEvalGrid() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateScenarios() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateBilan() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateSMART() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generatePAI() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        function generateGuidance() {
+            Utils.showToast('📥 Fonctionnalité en développement', 'info');
+        }
+
+        // Enter pour valider
+        document.getElementById('accessCode')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkAccess();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "name": "SESSAD Petit Prince - Assistants",
+  "short_name": "SESSAD Assistants",
+  "description": "Outils d'accompagnement pour TDAH, TSA et troubles Dys",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#87CEEB",
+  "theme_color": "#F4A460",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "logo-petit-prince.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo-petit-prince.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "health", "lifestyle"],
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Assistant TDAH",
+      "url": "/assistant-tdah.html",
+      "description": "Accès rapide à l'assistant TDAH"
+    },
+    {
+      "name": "Assistant TSA",
+      "url": "/assistant-tsa.html",
+      "description": "Accès rapide à l'assistant TSA"
+    },
+    {
+      "name": "Assistant Dys",
+      "url": "/assistant-dys.html",
+      "description": "Accès rapide à l'assistant Dys"
+    },
+    {
+      "name": "Pictogrammes",
+      "url": "/pictogrammes.html",
+      "description": "Rechercher des pictogrammes"
+    }
+  ]
+}

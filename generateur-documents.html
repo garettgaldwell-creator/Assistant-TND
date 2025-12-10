@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Documents - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.nuxtjs.org/dist/html2canvas.min.js"></script>
+    
+    <style>
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .template-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .template-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .template-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .template-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .editor-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+        
+        .preview-area {
+            border: 2px dashed var(--primary);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            background: #FAFAFA;
+            min-height: 400px;
+        }
+        
+        .day-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .activity-slot {
+            background: #F0F8FF;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .reward-cell {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--primary);
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .reward-cell.filled {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li><a href="outils.html">Outils</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Générateur de Documents</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; margin-bottom: 30px;">
+            <h1 class="card-title" style="font-size: 2.5rem;">📄 Générateur de Documents Imprimables</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Crée et imprime des supports personnalisés : calendriers, planches de pictos, tableaux de récompenses et plus encore !
+            </p>
+        </div>
+
+        <!-- Sélection du type de document -->
+        <div id="templateSelection" class="card">
+            <h2 class="card-title">📋 Choisis un type de document</h2>
+            
+            <div class="template-grid">
+                <div class="template-card" onclick="selectTemplate('calendar-weekly')">
+                    <div class="template-icon">📅</div>
+                    <h3 class="template-title">Planning Hebdomadaire</h3>
+                    <p class="template-desc">Organise ta semaine avec des cases visuelles pour chaque jour</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('calendar-monthly')">
+                    <div class="template-icon">📆</div>
+                    <h3 class="template-title">Calendrier Mensuel</h3>
+                    <p class="template-desc">Vue d'ensemble du mois avec événements et activités</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('picto-board')">
+                    <div class="template-icon">🖼️</div>
+                    <h3 class="template-title">Planche de Pictogrammes</h3>
+                    <p class="template-desc">Crée une planche avec tes pictogrammes sélectionnés</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('reward-chart')">
+                    <div class="template-icon">⭐</div>
+                    <h3 class="template-title">Tableau de Récompenses</h3>
+                    <p class="template-desc">Système d'étoiles pour motiver et encourager</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('routine-card')">
+                    <div class="template-icon">📋</div>
+                    <h3 class="template-title">Carte de Routine</h3>
+                    <p class="template-desc">Étapes visuelles d'une routine quotidienne</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('emotion-card')">
+                    <div class="template-icon">😊</div>
+                    <h3 class="template-title">Carte d'Émotions</h3>
+                    <p class="template-desc">Support pour identifier et communiquer ses émotions</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('choice-board')">
+                    <div class="template-icon">🔀</div>
+                    <h3 class="template-title">Tableau de Choix</h3>
+                    <p class="template-desc">2-4 options illustrées pour faciliter les décisions</p>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('schedule-visual')">
+                    <div class="template-icon">⏰</div>
+                    <h3 class="template-title">Emploi du Temps Visuel</h3>
+                    <p class="template-desc">Planning journalier avec pictogrammes et horaires</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Éditeur (caché au départ) -->
+        <div id="editorSection" style="display: none;">
+            <!-- Planning Hebdomadaire -->
+            <div id="editor-calendar-weekly" class="editor-container" style="display: none;">
+                <h2 class="card-title">📅 Planning Hebdomadaire</h2>
+                
+                <div style="margin: 30px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Titre du planning :</label>
+                    <input type="text" id="weeklyTitle" placeholder="Ex: Semaine du 11 au 17 décembre" value="Ma Semaine">
+                </div>
+
+                <div class="preview-area" id="weeklyPreview">
+                    <h3 style="text-align: center; color: var(--primary); margin-bottom: 30px;">Ma Semaine</h3>
+                    <div id="weeklyDays"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button onclick="generateWeeklyPDF()" class="btn btn-primary">📄 Générer PDF</button>
+                    <button onclick="printDocument()" class="btn btn-info">🖨️ Imprimer</button>
+                    <button onclick="backToSelection()" class="btn btn-danger">← Retour</button>
+                </div>
+            </div>
+
+            <!-- Tableau de Récompenses -->
+            <div id="editor-reward-chart" class="editor-container" style="display: none;">
+                <h2 class="card-title">⭐ Tableau de Récompenses</h2>
+                
+                <div style="margin: 30px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Objectif :</label>
+                    <input type="text" id="rewardGoal" placeholder="Ex: Ranger ma chambre" value="Mon Objectif">
+                    
+                    <label style="display: block; font-weight: 600; margin: 20px 0 10px;">Nombre d'étoiles nécessaires :</label>
+                    <select id="rewardCount" onchange="updateRewardChart()">
+                        <option value="5">5 étoiles</option>
+                        <option value="10" selected>10 étoiles</option>
+                        <option value="15">15 étoiles</option>
+                        <option value="20">20 étoiles</option>
+                    </select>
+                </div>
+
+                <div class="preview-area" id="rewardPreview">
+                    <h3 style="text-align: center; color: var(--primary); margin-bottom: 30px;">Mon Objectif</h3>
+                    <div id="rewardGrid" style="text-align: center;"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button onclick="generateRewardPDF()" class="btn btn-primary">📄 Générer PDF</button>
+                    <button onclick="printDocument()" class="btn btn-info">🖨️ Imprimer</button>
+                    <button onclick="backToSelection()" class="btn btn-danger">← Retour</button>
+                </div>
+            </div>
+
+            <!-- Planche de Pictogrammes -->
+            <div id="editor-picto-board" class="editor-container" style="display: none;">
+                <h2 class="card-title">🖼️ Planche de Pictogrammes</h2>
+                
+                <div style="background: #FFF3E0; padding: 20px; border-radius: 12px; margin: 20px 0;">
+                    <p style="font-weight: 600; color: var(--warning);">💡 Comment ça marche ?</p>
+                    <p style="margin-top: 10px;">Va d'abord sur la <a href="pictogrammes.html" style="color: var(--primary); font-weight: 600;">page Pictogrammes</a>, sélectionne tes pictogrammes, puis clique sur "Créer une planche". Tu seras redirigé(e) ici automatiquement !</p>
+                </div>
+
+                <div id="pictoBoard" class="preview-area"></div>
+
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button onclick="generatePictoBoardPDF()" class="btn btn-primary">📄 Générer PDF</button>
+                    <button onclick="window.location.href='pictogrammes.html'" class="btn btn-success">← Sélectionner des pictos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let currentTemplate = null;
+
+        function selectTemplate(template) {
+            currentTemplate = template;
+            document.getElementById('templateSelection').style.display = 'none';
+            document.getElementById('editorSection').style.display = 'block';
+            document.getElementById(`editor-${template}`).style.display = 'block';
+            
+            // Initialiser selon le type
+            if (template === 'calendar-weekly') {
+                initWeeklyCalendar();
+            } else if (template === 'reward-chart') {
+                updateRewardChart();
+            } else if (template === 'picto-board') {
+                loadPictoBoard();
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToSelection() {
+            document.getElementById('templateSelection').style.display = 'block';
+            document.getElementById('editorSection').style.display = 'none';
+            document.querySelectorAll('.editor-container').forEach(el => el.style.display = 'none');
+        }
+
+        // PLANNING HEBDOMADAIRE
+        function initWeeklyCalendar() {
+            const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+            const container = document.getElementById('weeklyDays');
+            
+            container.innerHTML = days.map(day => `
+                <div class="day-box">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">${day}</h4>
+                    <div class="activity-slot">
+                        <input type="text" placeholder="Activité du matin..." style="flex: 1;">
+                    </div>
+                    <div class="activity-slot">
+                        <input type="text" placeholder="Activité de l'après-midi..." style="flex: 1;">
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function generateWeeklyPDF() {
+            Utils.showToast('⏳ Génération du PDF...', 'info');
+            
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('portrait', 'mm', 'a4');
+                
+                const title = document.getElementById('weeklyTitle').value || 'Ma Semaine';
+                
+                doc.setFontSize(20);
+                doc.setFont(undefined, 'bold');
+                doc.text(title, 105, 20, { align: 'center' });
+                
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'normal');
+                
+                let yPos = 40;
+                const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+                
+                days.forEach((day, index) => {
+                    if (yPos > 260) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    
+                    doc.setFont(undefined, 'bold');
+                    doc.text(day, 20, yPos);
+                    
+                    yPos += 8;
+                    doc.setFont(undefined, 'normal');
+                    doc.rect(20, yPos, 170, 10);
+                    yPos += 12;
+                    doc.rect(20, yPos, 170, 10);
+                    yPos += 20;
+                });
+                
+                doc.save('planning-hebdomadaire.pdf');
+                Utils.showToast('✓ PDF généré !', 'success');
+            } catch (error) {
+                console.error(error);
+                Utils.showToast('❌ Erreur génération PDF', 'error');
+            }
+        }
+
+        // TABLEAU DE RÉCOMPENSES
+        function updateRewardChart() {
+            const count = parseInt(document.getElementById('rewardCount').value);
+            const goal = document.getElementById('rewardGoal').value || 'Mon Objectif';
+            const grid = document.getElementById('rewardGrid');
+            
+            document.querySelector('#rewardPreview h3').textContent = goal;
+            
+            let html = '';
+            for (let i = 0; i < count; i++) {
+                html += `<div class="reward-cell" onclick="this.classList.toggle('filled')">⭐</div>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        async function generateRewardPDF() {
+            Utils.showToast('⏳ Génération du PDF...', 'info');
+            
+            try {
+                const element = document.getElementById('rewardPreview');
+                const canvas = await html2canvas(element);
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('portrait', 'mm', 'a4');
+                
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 190;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                doc.save('tableau-recompenses.pdf');
+                
+                Utils.showToast('✓ PDF généré !', 'success');
+            } catch (error) {
+                console.error(error);
+                Utils.showToast('❌ Erreur génération PDF', 'error');
+            }
+        }
+
+        // PLANCHE DE PICTOGRAMMES
+        function loadPictoBoard() {
+            const pictos = JSON.parse(localStorage.getItem('selected_pictos') || '[]');
+            const container = document.getElementById('pictoBoard');
+            
+            if (pictos.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 60px;">Aucun pictogramme sélectionné. Va d\'abord sur la page Pictogrammes pour en choisir !</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <h3 style="text-align: center; margin-bottom: 30px;">Planche de ${pictos.length} pictogrammes</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 20px;">
+                    ${pictos.map(p => `
+                        <div style="text-align: center;">
+                            <img src="https://api.arasaac.org/v1/pictograms/${p._id}" style="width: 100%; max-width: 100px;">
+                            <p style="font-weight: 600; margin-top: 8px;">${p.keywords[0]?.keyword || ''}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        async function generatePictoBoardPDF() {
+            Utils.showToast('⏳ Génération du PDF...', 'info');
+            
+            try {
+                const element = document.getElementById('pictoBoard');
+                const canvas = await html2canvas(element, { scale: 2 });
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('portrait', 'mm', 'a4');
+                
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 190;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                doc.save('planche-pictogrammes.pdf');
+                
+                Utils.showToast('✓ PDF généré !', 'success');
+            } catch (error) {
+                console.error(error);
+                Utils.showToast('❌ Erreur génération PDF', 'error');
+            }
+        }
+
+        function printDocument() {
+            window.print();
+        }
+
+        // Charger automatiquement si vient des pictogrammes
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            
+            if (type === 'planche-pictos') {
+                selectTemplate('picto-board');
+            }
+        });
+    </script>
+</body>
+</html>
