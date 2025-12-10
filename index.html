@@ -236,7 +236,7 @@
             </button>
             
             <ul class="nav-menu">
-                <li><a href="index-new.html" class="active">🏠 Accueil</a></li>
+                <li><a href="index.html" class="active">🏠 Accueil</a></li>
                 <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
                 <li><a href="assistant-tsa.html">🧩 TSA</a></li>
                 <li><a href="assistant-dys.html">📚 Dys</a></li>
@@ -367,22 +367,63 @@
                 </a>
             </div>
         </section>
+
+        <!-- Espaces Dédiés -->
+        <section class="card">
+            <h2 class="card-title">👥 Espaces Dédiés</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">Ressources et outils spécifiques pour parents et professionnels</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
+                <!-- Espace Parents -->
+                <a href="espace-parents.html" style="text-decoration: none; color: inherit;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; text-align: center; color: white; transition: all 0.3s; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
+                        <div style="font-size: 5rem; margin-bottom: 20px;">👨‍👩‍👧</div>
+                        <h3 style="font-size: 2rem; margin-bottom: 15px; color: white;">Espace Parents</h3>
+                        <p style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6; margin-bottom: 25px;">
+                            Guides d'utilisation, fiches pratiques, conseils pour accompagner votre enfant au quotidien
+                        </p>
+                        <div style="display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">📘 Guides</span>
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">📄 Fiches PDF</span>
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">❓ FAQ</span>
+                        </div>
+                        <div style="margin-top: 25px; font-weight: 700; font-size: 1.1rem;">
+                            Accéder à l'espace →
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Espace Professionnels -->
+                <a href="espace-professionnels.html" style="text-decoration: none; color: inherit;">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 20px; text-align: center; color: white; transition: all 0.3s; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
+                        <div style="font-size: 5rem; margin-bottom: 20px;">👔</div>
+                        <h3 style="font-size: 2rem; margin-bottom: 15px; color: white;">Espace Professionnels</h3>
+                        <p style="font-size: 1.1rem; opacity: 0.95; line-height: 1.6; margin-bottom: 25px;">
+                            Protocoles d'intervention, fiches techniques, ressources spécialisées pour les accompagnants
+                        </p>
+                        <div style="display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">📋 Protocoles</span>
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">📊 Bilans</span>
+                            <span style="background: rgba(255,255,255,0.25); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">🔒 Accès sécurisé</span>
+                        </div>
+                        <div style="margin-top: 25px; font-weight: 700; font-size: 1.1rem;">
+                            Accéder à l'espace →
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>À propos</h3>
-                <p>Des outils numériques créés pour accompagner les enfants avec des besoins spécifiques.</p>
-                <p style="margin-top: 10px;"><strong>SESSAD Petit Prince</strong></p>
-            </div>
-            <div class="footer-section">
                 <h3>Navigation</h3>
                 <ul>
-                    <li><a href="index-new.html">Accueil</a></li>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
                     <li><a href="ressources.html">Ressources</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
@@ -395,11 +436,19 @@
                 </ul>
             </div>
             <div class="footer-section">
+                <h3>Espaces Dédiés</h3>
+                <ul>
+                    <li><a href="espace-parents.html">👨‍👩‍👧 Espace Parents</a></li>
+                    <li><a href="espace-professionnels.html">👔 Espace Professionnels</a></li>
+                    <li><a href="pictogrammes.html">🖼️ Pictogrammes</a></li>
+                    <li><a href="generateur-documents.html">📄 Générateur</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
                 <h3>Légal</h3>
                 <ul>
                     <li><a href="mentions-legales.html">Mentions légales</a></li>
                     <li><a href="rgpd.html">RGPD</a></li>
-                    <li><a href="accessibilite.html">Accessibilité</a></li>
                 </ul>
             </div>
         </div>
