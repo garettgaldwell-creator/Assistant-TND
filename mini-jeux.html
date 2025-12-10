@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Jeux - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .game-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .game-board {
+            display: grid;
+            gap: 10px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .memory-card, .sequence-btn {
+            aspect-ratio: 1;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .memory-card {
+            background: var(--primary);
+        }
+        
+        .memory-card.flipped {
+            background: white;
+            border: 3px solid var(--primary);
+        }
+        
+        .memory-card.matched {
+            background: var(--success);
+            cursor: default;
+        }
+        
+        .sequence-btn {
+            background: var(--info);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .sequence-btn.active {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+                                    <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">
+                        👤 Mon Espace ▼
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="mon-profil.html">👤 Mon Profil</a>
+                        <a href="mes-recompenses.html">🏆 Mes Récompenses</a>
+                        <a href="mon-journal.html">📖 Mon Journal</a>
+                        <a href="mes-progres.html">📈 Mes Progrès</a>
+                        <a href="mini-jeux.html">🎮 Mini-Jeux</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Mini-Jeux</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; margin-bottom: 40px;">
+            <h1 style="font-size: 3rem; color: white; margin-bottom: 20px;">🎮 Mini-Jeux Éducatifs</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95;">Amuse-toi tout en travaillant ta mémoire, ta concentration et ta logique !</p>
+        </div>
+
+        <!-- Sélection jeux -->
+        <div id="gameSelection" class="card">
+            <h2 class="card-title">🎯 Choisis un Jeu</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px;">
+                <div class="game-card" onclick="startGame('memory')">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🧠</div>
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 10px;">Memory</h3>
+                    <p style="color: #666;">Trouve les paires d'émojis identiques</p>
+                    <div style="margin-top: 15px;">
+                        <span style="background: #E8F5E9; padding: 5px 15px; border-radius: 15px; font-size: 0.9rem; color: var(--success);">Mémoire</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="startGame('sequence')">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🔢</div>
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 10px;">Séquence</h3>
+                    <p style="color: #666;">Mémorise et reproduis la séquence</p>
+                    <div style="margin-top: 15px;">
+                        <span style="background: #E3F2FD; padding: 5px 15px; border-radius: 15px; font-size: 0.9rem; color: var(--info);">Attention</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="startGame('math')">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">➕</div>
+                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 10px;">Calcul Mental</h3>
+                    <p style="color: #666;">Résous des calculs simples rapidement</p>
+                    <div style="margin-top: 15px;">
+                        <span style="background: #FFF3E0; padding: 5px 15px; border-radius: 15px; font-size: 0.9rem; color: var(--warning);">Logique</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jeu Memory -->
+        <div id="memoryGame" class="card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="card-title">🧠 Memory</h2>
+                <button onclick="backToSelection()" class="btn btn-danger">← Retour</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="background: #E8F5E9; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Coups : <strong id="memoryMoves">0</strong>
+                </span>
+                <span style="background: #E3F2FD; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Paires : <strong id="memoryPairs">0</strong> / 6
+                </span>
+            </div>
+            
+            <div id="memoryBoard" class="game-board" style="grid-template-columns: repeat(4, 1fr);"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="resetMemory()" class="btn btn-primary">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Jeu Séquence -->
+        <div id="sequenceGame" class="card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="card-title">🔢 Séquence</h2>
+                <button onclick="backToSelection()" class="btn btn-danger">← Retour</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="background: #E8F5E9; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Niveau : <strong id="sequenceLevel">1</strong>
+                </span>
+                <span style="background: #E3F2FD; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Score : <strong id="sequenceScore">0</strong>
+                </span>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button onclick="startSequence()" class="btn btn-success" id="startSequenceBtn">▶️ Démarrer</button>
+            </div>
+            
+            <div id="sequenceBoard" class="game-board" style="grid-template-columns: repeat(3, 1fr);"></div>
+        </div>
+
+        <!-- Jeu Calcul -->
+        <div id="mathGame" class="card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="card-title">➕ Calcul Mental</h2>
+                <button onclick="backToSelection()" class="btn btn-danger">← Retour</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span style="background: #E8F5E9; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Score : <strong id="mathScore">0</strong>
+                </span>
+                <span style="background: #FFF3E0; padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    Temps : <strong id="mathTimer">30</strong>s
+                </span>
+            </div>
+            
+            <div style="background: white; padding: 50px; border-radius: 20px; text-align: center; max-width: 400px; margin: 0 auto;">
+                <div id="mathQuestion" style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 30px;">5 + 3 = ?</div>
+                <input type="number" id="mathAnswer" placeholder="Ta réponse" style="width: 100%; font-size: 2rem; text-align: center; padding: 15px; margin-bottom: 20px;">
+                <button onclick="checkMathAnswer()" class="btn btn-primary" style="width: 100%; font-size: 1.3rem; padding: 15px;">✓ Valider</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mon-profil.html">Mon Profil</a></li>
+                    <li><a href="mes-recompenses.html">Mes Récompenses</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let currentGame = null;
+        let memoryCards = [];
+        let flippedCards = [];
+        let moves = 0;
+        let pairs = 0;
+
+        function startGame(game) {
+            document.getElementById('gameSelection').style.display = 'none';
+            document.getElementById('memoryGame').style.display = game === 'memory' ? 'block' : 'none';
+            document.getElementById('sequenceGame').style.display = game === 'sequence' ? 'block' : 'none';
+            document.getElementById('mathGame').style.display = game === 'math' ? 'block' : 'none';
+            
+            currentGame = game;
+            
+            if (game === 'memory') initMemory();
+            if (game === 'sequence') initSequence();
+            if (game === 'math') initMath();
+        }
+
+        function backToSelection() {
+            document.getElementById('gameSelection').style.display = 'block';
+            document.getElementById('memoryGame').style.display = 'none';
+            document.getElementById('sequenceGame').style.display = 'none';
+            document.getElementById('mathGame').style.display = 'none';
+        }
+
+        // === MEMORY ===
+        function initMemory() {
+            const emojis = ['🍎', '🍌', '🍇', '🍓', '🍊', '🍉'];
+            memoryCards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+            moves = 0;
+            pairs = 0;
+            flippedCards = [];
+            
+            const board = document.getElementById('memoryBoard');
+            board.innerHTML = memoryCards.map((emoji, i) => `
+                <div class="memory-card" data-index="${i}" onclick="flipCard(${i})">
+                    <span style="display: none;">${emoji}</span>
+                    ?
+                </div>
+            `).join('');
+            
+            document.getElementById('memoryMoves').textContent = 0;
+            document.getElementById('memoryPairs').textContent = 0;
+        }
+
+        function flipCard(index) {
+            if (flippedCards.length >= 2) return;
+            
+            const card = document.querySelectorAll('.memory-card')[index];
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+            
+            card.classList.add('flipped');
+            card.textContent = memoryCards[index];
+            flippedCards.push({ index, emoji: memoryCards[index], element: card });
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('memoryMoves').textContent = moves;
+                
+                setTimeout(() => {
+                    if (flippedCards[0].emoji === flippedCards[1].emoji) {
+                        flippedCards.forEach(c => c.element.classList.add('matched'));
+                        pairs++;
+                        document.getElementById('memoryPairs').textContent = pairs;
+                        
+                        if (pairs === 6) {
+                            setTimeout(() => {
+                                alert(`🎉 Bravo ! Tu as gagné en ${moves} coups !`);
+                                if (typeof addPoints === 'function') addPoints(10, 'Memory complété');
+                            }, 300);
+                        }
+                    } else {
+                        flippedCards.forEach(c => {
+                            c.element.classList.remove('flipped');
+                            c.element.textContent = '?';
+                        });
+                    }
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function resetMemory() {
+            initMemory();
+        }
+
+        // === SÉQUENCE ===
+        let sequence = [];
+        let playerSequence = [];
+        let level = 1;
+        let score = 0;
+
+        function initSequence() {
+            const board = document.getElementById('sequenceBoard');
+            board.innerHTML = '';
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'sequence-btn';
+                btn.textContent = i;
+                btn.onclick = () => playerClick(i);
+                board.appendChild(btn);
+            }
+            
+            sequence = [];
+            playerSequence = [];
+            level = 1;
+            score = 0;
+            updateSequenceUI();
+        }
+
+        function startSequence() {
+            document.getElementById('startSequenceBtn').disabled = true;
+            sequence.push(Math.floor(Math.random() * 9) + 1);
+            playSequence();
+        }
+
+        function playSequence() {
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < sequence.length) {
+                    highlightButton(sequence[i]);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('startSequenceBtn').disabled = false;
+                }
+            }, 800);
+        }
+
+        function highlightButton(num) {
+            const btns = document.querySelectorAll('.sequence-btn');
+            const btn = Array.from(btns).find(b => b.textContent == num);
+            btn.classList.add('active');
+            setTimeout(() => btn.classList.remove('active'), 400);
+        }
+
+        function playerClick(num) {
+            playerSequence.push(num);
+            highlightButton(num);
+            
+            const currentIndex = playerSequence.length - 1;
+            if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+                alert('❌ Erreur ! Recommence.');
+                initSequence();
+                return;
+            }
+            
+            if (playerSequence.length === sequence.length) {
+                score += level * 10;
+                level++;
+                updateSequenceUI();
+                playerSequence = [];
+                setTimeout(startSequence, 1000);
+            }
+        }
+
+        function updateSequenceUI() {
+            document.getElementById('sequenceLevel').textContent = level;
+            document.getElementById('sequenceScore').textContent = score;
+        }
+
+        // === CALCUL ===
+        let mathScore = 0;
+        let mathTimer = 30;
+        let mathInterval = null;
+        let currentAnswer = 0;
+
+        function initMath() {
+            mathScore = 0;
+            mathTimer = 30;
+            document.getElementById('mathScore').textContent = 0;
+            document.getElementById('mathTimer').textContent = 30;
+            document.getElementById('mathAnswer').value = '';
+            
+            generateMathQuestion();
+            
+            mathInterval = setInterval(() => {
+                mathTimer--;
+                document.getElementById('mathTimer').textContent = mathTimer;
+                if (mathTimer === 0) {
+                    clearInterval(mathInterval);
+                    alert(`⏱️ Temps écoulé ! Score final : ${mathScore}`);
+                    if (typeof addPoints === 'function') addPoints(mathScore, 'Calcul mental');
+                }
+            }, 1000);
+            
+            document.getElementById('mathAnswer').focus();
+            document.getElementById('mathAnswer').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkMathAnswer();
+            });
+        }
+
+        function generateMathQuestion() {
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            const op = ['+', '-'][Math.floor(Math.random() * 2)];
+            
+            currentAnswer = op === '+' ? a + b : a - b;
+            document.getElementById('mathQuestion').textContent = `${a} ${op} ${b} = ?`;
+        }
+
+        function checkMathAnswer() {
+            const answer = parseInt(document.getElementById('mathAnswer').value);
+            
+            if (answer === currentAnswer) {
+                mathScore += 10;
+                document.getElementById('mathScore').textContent = mathScore;
+                Utils.showToast('✓ Correct ! +10', 'success');
+            } else {
+                Utils.showToast('✗ Faux !', 'error');
+            }
+            
+            document.getElementById('mathAnswer').value = '';
+            generateMathQuestion();
+            document.getElementById('mathAnswer').focus();
+        }
+    </script>
+</body>
+</html>

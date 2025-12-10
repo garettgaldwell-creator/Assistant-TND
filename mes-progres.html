@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Progrès - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+                                    <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">
+                        👤 Mon Espace ▼
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="mon-profil.html">👤 Mon Profil</a>
+                        <a href="mes-recompenses.html">🏆 Mes Récompenses</a>
+                        <a href="mon-journal.html">📖 Mon Journal</a>
+                        <a href="mes-progres.html">📈 Mes Progrès</a>
+                        <a href="mini-jeux.html">🎮 Mini-Jeux</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Mes Progrès</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 40px;">
+            <h1 style="font-size: 3rem; color: white; margin-bottom: 20px;">📈 Mes Progrès</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95;">Visualise ton évolution et célèbre tes réussites !</p>
+        </div>
+
+        <!-- Vue d'ensemble -->
+        <div class="card">
+            <h2 class="card-title">📊 Vue d'Ensemble</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div style="background: #E8F5E9; padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem;">✅</div>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--success); margin: 10px 0;" id="totalTasks">0</div>
+                    <div style="color: #666;">Tâches complétées</div>
+                </div>
+
+                <div style="background: #FFF3E0; padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem;">📋</div>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary); margin: 10px 0;" id="totalSequentials">0</div>
+                    <div style="color: #666;">Séquentiels créés</div>
+                </div>
+
+                <div style="background: #E3F2FD; padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem;">📖</div>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--info); margin: 10px 0;" id="totalJournals">0</div>
+                    <div style="color: #666;">Entrées journal</div>
+                </div>
+
+                <div style="background: #F3E5F5; padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem;">⭐</div>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary); margin: 10px 0;" id="totalPoints">0</div>
+                    <div style="color: #666;">Points gagnés</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphiques -->
+        <div class="card">
+            <h2 class="card-title">📊 Activité des 7 Derniers Jours</h2>
+            <canvas id="activityChart" style="max-height: 300px; margin-top: 30px;"></canvas>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
+            <div class="card">
+                <h2 class="card-title">🎯 Tâches par Priorité</h2>
+                <canvas id="priorityChart" style="max-height: 250px; margin-top: 30px;"></canvas>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">😊 Répartition Émotions</h2>
+                <canvas id="emotionsChart" style="max-height: 250px; margin-top: 30px;"></canvas>
+            </div>
+        </div>
+
+        <!-- Historique -->
+        <div class="card">
+            <h2 class="card-title">📅 Mon Historique</h2>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🎉 Dernières Réussites</h3>
+                <div id="recentAchievements"></div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🏆 Badges Récents</h3>
+                <div id="recentBadges"></div>
+            </div>
+        </div>
+
+        <!-- Exporter -->
+        <div class="card" style="background: #E8F5E9; border: 2px solid var(--success);">
+            <h3 style="color: var(--success); margin-bottom: 20px;">📥 Exporter Mes Données</h3>
+            <p style="margin-bottom: 20px; line-height: 1.8;">Télécharge un rapport complet de tes progrès en PDF ou Excel.</p>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button onclick="exportPDF()" class="btn btn-success">📄 Exporter en PDF</button>
+                <button onclick="exportCSV()" class="btn btn-info">📊 Exporter en CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mon-profil.html">Mon Profil</a></li>
+                    <li><a href="mes-recompenses.html">Mes Récompenses</a></li>
+                    <li><a href="mon-journal.html">Mon Journal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let profile = JSON.parse(localStorage.getItem('user_profile')) || { stats: {} };
+        let tdahTasks = JSON.parse(localStorage.getItem('tdah_tasks')) || [];
+        let dysTasks = JSON.parse(localStorage.getItem('dys_tasks')) || [];
+        let journals = JSON.parse(localStorage.getItem('daily_journals')) || [];
+
+        window.addEventListener('load', () => {
+            updateStats();
+            createActivityChart();
+            createPriorityChart();
+            createEmotionsChart();
+            displayRecentAchievements();
+        });
+
+        function updateStats() {
+            const completedTasks = [...tdahTasks, ...dysTasks].filter(t => t.completed);
+            
+            document.getElementById('totalTasks').textContent = completedTasks.length;
+            document.getElementById('totalSequentials').textContent = profile.stats?.sequentialsCreated || 0;
+            document.getElementById('totalJournals').textContent = journals.length;
+            document.getElementById('totalPoints').textContent = profile.stats?.totalPoints || 0;
+        }
+
+        function createActivityChart() {
+            const ctx = document.getElementById('activityChart');
+            const last7Days = [];
+            
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                last7Days.push(date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }));
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: last7Days,
+                    datasets: [{
+                        label: 'Tâches',
+                        data: [3, 5, 2, 4, 6, 3, 4],
+                        backgroundColor: 'rgba(102, 126, 234, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+        }
+
+        function createPriorityChart() {
+            const ctx = document.getElementById('priorityChart');
+            const allTasks = [...tdahTasks, ...dysTasks];
+            
+            const highPriority = allTasks.filter(t => t.priority === 'high').length;
+            const mediumPriority = allTasks.filter(t => t.priority === 'medium').length;
+            const lowPriority = allTasks.filter(t => t.priority === 'low').length;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Haute', 'Moyenne', 'Basse'],
+                    datasets: [{
+                        data: [highPriority, mediumPriority, lowPriority],
+                        backgroundColor: ['#FF6B6B', '#F4A460', '#4ECDC4']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+        }
+
+        function createEmotionsChart() {
+            const ctx = document.getElementById('emotionsChart');
+            
+            const emotionCounts = {};
+            journals.forEach(j => {
+                const label = j.emotion.label;
+                emotionCounts[label] = (emotionCounts[label] || 0) + 1;
+            });
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(emotionCounts),
+                    datasets: [{
+                        data: Object.values(emotionCounts),
+                        backgroundColor: ['#FFD700', '#87CEEB', '#FF6B6B', '#4ECDC4', '#9B59B6', '#F4A460']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+        }
+
+        function displayRecentAchievements() {
+            const container = document.getElementById('recentAchievements');
+            const completedTasks = [...tdahTasks, ...dysTasks].filter(t => t.completed).slice(0, 5);
+            
+            if (completedTasks.length === 0) {
+                container.innerHTML = '<p style="color: #999;">Aucune tâche complétée récemment</p>';
+                return;
+            }
+
+            container.innerHTML = completedTasks.map(task => `
+                <div style="background: #E8F5E9; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px;">
+                    <div style="font-size: 2rem;">✅</div>
+                    <div style="flex: 1;">${task.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function exportPDF() {
+            Utils.showToast('📄 Export PDF en développement', 'info');
+        }
+
+        function exportCSV() {
+            const data = [
+                ['Type', 'Description', 'Date', 'Statut'],
+                ...tdahTasks.map(t => ['Tâche', t.text, t.createdAt, t.completed ? 'Terminé' : 'En cours']),
+                ...journals.map(j => ['Journal', j.feelings.substring(0, 50), j.date, j.emotion.label])
+            ];
+
+            const csv = data.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mes-progres-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            
+            Utils.showToast('✓ Données exportées !', 'success');
+        }
+    </script>
+</body>
+</html>

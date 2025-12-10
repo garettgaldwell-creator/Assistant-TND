@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .profile-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .avatar-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .avatar-option {
+            font-size: 4rem;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            background: white;
+        }
+        
+        .avatar-option:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .avatar-option.selected {
+            border-color: var(--success);
+            background: #E8F5E9;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .preference-group {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+                                    <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">
+                        👤 Mon Espace ▼
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="mon-profil.html">👤 Mon Profil</a>
+                        <a href="mes-recompenses.html">🏆 Mes Récompenses</a>
+                        <a href="mon-journal.html">📖 Mon Journal</a>
+                        <a href="mes-progres.html">📈 Mes Progrès</a>
+                        <a href="mini-jeux.html">🎮 Mini-Jeux</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Mon Profil</li>
+            </ul>
+        </nav>
+
+        <!-- Hero Profil -->
+        <div class="profile-hero">
+            <div id="userAvatar" style="font-size: 6rem; margin-bottom: 20px;">👤</div>
+            <h1 id="userName" style="font-size: 3rem; color: white; margin-bottom: 10px;">Mon Profil</h1>
+            <p id="userLevel" style="font-size: 1.3rem; opacity: 0.95;">Niveau 1 - Débutant</p>
+            <div style="margin-top: 30px;">
+                <span style="background: rgba(255,255,255,0.25); padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    🏆 <span id="totalBadges">0</span> badges
+                </span>
+                <span style="background: rgba(255,255,255,0.25); padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    ⭐ <span id="totalPoints">0</span> points
+                </span>
+                <span style="background: rgba(255,255,255,0.25); padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    📅 <span id="streakDays">0</span> jours de suite
+                </span>
+            </div>
+        </div>
+
+        <!-- Informations Personnelles -->
+        <div class="card">
+            <h2 class="card-title">👤 Mes Informations</h2>
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+                <div style="margin: 25px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Mon prénom :</label>
+                    <input type="text" id="profileName" placeholder="Entre ton prénom" style="width: 100%;">
+                </div>
+
+                <div style="margin: 25px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Mon âge :</label>
+                    <input type="number" id="profileAge" placeholder="Ton âge" min="3" max="18" style="width: 100%;">
+                </div>
+
+                <div style="margin: 25px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 15px;">Mon profil :</label>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <label style="flex: 1; min-width: 150px;">
+                            <input type="checkbox" id="profileTDAH" style="margin-right: 8px;">
+                            <strong>TDAH</strong>
+                        </label>
+                        <label style="flex: 1; min-width: 150px;">
+                            <input type="checkbox" id="profileTSA" style="margin-right: 8px;">
+                            <strong>TSA</strong>
+                        </label>
+                        <label style="flex: 1; min-width: 150px;">
+                            <input type="checkbox" id="profileDys" style="margin-right: 8px;">
+                            <strong>Dys</strong>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="margin: 25px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 15px;">Choisis ton avatar :</label>
+                    <div class="avatar-selector">
+                        <div class="avatar-option" onclick="selectAvatar('👦')">👦</div>
+                        <div class="avatar-option" onclick="selectAvatar('👧')">👧</div>
+                        <div class="avatar-option" onclick="selectAvatar('🧒')">🧒</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦸')">🦸</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦄')">🦄</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐱')">🐱</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐶')">🐶</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐻')">🐻</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦊')">🦊</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦁')">🦁</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐼')">🐼</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐸')">🐸</div>
+                    </div>
+                </div>
+
+                <button onclick="saveProfile()" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.2rem;">
+                    💾 Enregistrer mon profil
+                </button>
+            </div>
+        </div>
+
+        <!-- Mes Statistiques -->
+        <div class="card">
+            <h2 class="card-title">📊 Mes Statistiques</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 30px;">
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">✅</div>
+                    <div class="stat-number" id="statTasks">0</div>
+                    <div style="color: #666;">Tâches complétées</div>
+                </div>
+
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">📋</div>
+                    <div class="stat-number" id="statSequentials">0</div>
+                    <div style="color: #666;">Séquentiels créés</div>
+                </div>
+
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">😊</div>
+                    <div class="stat-number" id="statJournals">0</div>
+                    <div style="color: #666;">Entrées journal</div>
+                </div>
+
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">🎮</div>
+                    <div class="stat-number" id="statGames">0</div>
+                    <div style="color: #666;">Parties jouées</div>
+                </div>
+
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">📅</div>
+                    <div class="stat-number" id="statDays">0</div>
+                    <div style="color: #666;">Jours d'utilisation</div>
+                </div>
+
+                <div class="stat-card">
+                    <div style="font-size: 3rem;">🔥</div>
+                    <div class="stat-number" id="statStreak">0</div>
+                    <div style="color: #666;">Série actuelle</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Préférences -->
+        <div class="card">
+            <h2 class="card-title">⚙️ Mes Préférences</h2>
+            
+            <div class="preference-group">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🎨 Apparence</h3>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer;">
+                        <input type="checkbox" id="prefDarkMode" style="width: 20px; height: 20px;">
+                        Mode sombre (bientôt disponible)
+                    </label>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Taille de texte par défaut :</label>
+                    <select id="prefTextSize" style="width: 100%; padding: 10px;">
+                        <option value="normal">Normal</option>
+                        <option value="large">Grand</option>
+                        <option value="xlarge">Très grand</option>
+                    </select>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer;">
+                        <input type="checkbox" id="prefDyslexic" style="width: 20px; height: 20px;">
+                        Toujours utiliser la police dyslexique
+                    </label>
+                </div>
+            </div>
+
+            <div class="preference-group">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🔔 Notifications</h3>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer;">
+                        <input type="checkbox" id="prefReminders" style="width: 20px; height: 20px;">
+                        Rappels quotidiens (bientôt disponible)
+                    </label>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer;">
+                        <input type="checkbox" id="prefSounds" style="width: 20px; height: 20px;" checked>
+                        Sons et effets sonores
+                    </label>
+                </div>
+            </div>
+
+            <div class="preference-group">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🎯 Objectifs</h3>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 10px;">Mon objectif quotidien de tâches :</label>
+                    <input type="number" id="prefDailyGoal" value="3" min="1" max="10" style="width: 100%; padding: 10px;">
+                </div>
+            </div>
+
+            <button onclick="savePreferences()" class="btn btn-success" style="width: 100%; padding: 15px; font-size: 1.2rem; margin-top: 20px;">
+                ✅ Enregistrer mes préférences
+            </button>
+        </div>
+
+        <!-- Gestion des données -->
+        <div class="card" style="background: #FFF3E0; border: 2px solid var(--warning);">
+            <h3 style="color: var(--warning); margin-bottom: 20px;">⚠️ Gestion de mes données</h3>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                <button onclick="exportData()" class="btn btn-info">
+                    📥 Exporter mes données
+                </button>
+                <button onclick="importData()" class="btn btn-success">
+                    📤 Importer des données
+                </button>
+                <button onclick="resetAllData()" class="btn btn-danger">
+                    🗑️ Réinitialiser tout
+                </button>
+            </div>
+            
+            <p style="margin-top: 20px; line-height: 1.8; color: #666;">
+                <strong>Note :</strong> Toutes tes données sont stockées localement sur cet appareil. 
+                Aucune information n'est envoyée à des serveurs. Tu peux exporter tes données pour les sauvegarder 
+                ou les transférer sur un autre appareil.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mes-recompenses.html">Mes Récompenses</a></li>
+                    <li><a href="mon-journal.html">Mon Journal</a></li>
+                    <li><a href="mes-progres.html">Mes Progrès</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let profile = JSON.parse(localStorage.getItem('user_profile')) || {
+            name: '',
+            age: '',
+            avatar: '👤',
+            profiles: { tdah: false, tsa: false, dys: false },
+            preferences: {
+                textSize: 'normal',
+                dyslexic: false,
+                darkMode: false,
+                reminders: false,
+                sounds: true,
+                dailyGoal: 3
+            },
+            stats: {
+                tasksCompleted: 0,
+                sequentialsCreated: 0,
+                journalEntries: 0,
+                gamesPlayed: 0,
+                daysUsed: 1,
+                currentStreak: 0,
+                totalPoints: 0,
+                totalBadges: 0,
+                lastVisit: new Date().toDateString()
+            }
+        };
+
+        // Charger le profil au démarrage
+        window.addEventListener('load', () => {
+            loadProfile();
+            updateStats();
+        });
+
+        function loadProfile() {
+            // Infos personnelles
+            document.getElementById('profileName').value = profile.name || '';
+            document.getElementById('profileAge').value = profile.age || '';
+            document.getElementById('profileTDAH').checked = profile.profiles?.tdah || false;
+            document.getElementById('profileTSA').checked = profile.profiles?.tsa || false;
+            document.getElementById('profileDys').checked = profile.profiles?.dys || false;
+            
+            // Avatar
+            document.getElementById('userAvatar').textContent = profile.avatar || '👤';
+            document.querySelectorAll('.avatar-option').forEach(el => {
+                if (el.textContent === profile.avatar) {
+                    el.classList.add('selected');
+                }
+            });
+            
+            // Nom dans le hero
+            if (profile.name) {
+                document.getElementById('userName').textContent = profile.name;
+            }
+            
+            // Préférences
+            document.getElementById('prefTextSize').value = profile.preferences?.textSize || 'normal';
+            document.getElementById('prefDyslexic').checked = profile.preferences?.dyslexic || false;
+            document.getElementById('prefDarkMode').checked = profile.preferences?.darkMode || false;
+            document.getElementById('prefReminders').checked = profile.preferences?.reminders || false;
+            document.getElementById('prefSounds').checked = profile.preferences?.sounds !== false;
+            document.getElementById('prefDailyGoal').value = profile.preferences?.dailyGoal || 3;
+        }
+
+        function selectAvatar(emoji) {
+            document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            profile.avatar = emoji;
+            document.getElementById('userAvatar').textContent = emoji;
+        }
+
+        function saveProfile() {
+            profile.name = document.getElementById('profileName').value.trim();
+            profile.age = document.getElementById('profileAge').value;
+            profile.profiles = {
+                tdah: document.getElementById('profileTDAH').checked,
+                tsa: document.getElementById('profileTSA').checked,
+                dys: document.getElementById('profileDys').checked
+            };
+            
+            localStorage.setItem('user_profile', JSON.stringify(profile));
+            
+            if (profile.name) {
+                document.getElementById('userName').textContent = profile.name;
+            }
+            
+            Utils.showToast('✓ Profil enregistré !', 'success');
+        }
+
+        function savePreferences() {
+            profile.preferences = {
+                textSize: document.getElementById('prefTextSize').value,
+                dyslexic: document.getElementById('prefDyslexic').checked,
+                darkMode: document.getElementById('prefDarkMode').checked,
+                reminders: document.getElementById('prefReminders').checked,
+                sounds: document.getElementById('prefSounds').checked,
+                dailyGoal: parseInt(document.getElementById('prefDailyGoal').value)
+            };
+            
+            localStorage.setItem('user_profile', JSON.stringify(profile));
+            Utils.showToast('✓ Préférences enregistrées !', 'success');
+        }
+
+        function updateStats() {
+            // Calculer les stats depuis localStorage
+            const tdahTasks = JSON.parse(localStorage.getItem('tdah_tasks')) || [];
+            const dysTasks = JSON.parse(localStorage.getItem('dys_tasks')) || [];
+            const journals = JSON.parse(localStorage.getItem('daily_journals')) || [];
+            
+            const completedTasks = [...tdahTasks, ...dysTasks].filter(t => t.completed).length;
+            
+            // Mettre à jour l'affichage
+            document.getElementById('statTasks').textContent = completedTasks;
+            document.getElementById('statSequentials').textContent = profile.stats?.sequentialsCreated || 0;
+            document.getElementById('statJournals').textContent = journals.length;
+            document.getElementById('statGames').textContent = profile.stats?.gamesPlayed || 0;
+            document.getElementById('statDays').textContent = profile.stats?.daysUsed || 1;
+            document.getElementById('statStreak').textContent = profile.stats?.currentStreak || 0;
+            
+            // Hero
+            document.getElementById('totalBadges').textContent = profile.stats?.totalBadges || 0;
+            document.getElementById('totalPoints').textContent = profile.stats?.totalPoints || 0;
+            document.getElementById('streakDays').textContent = profile.stats?.currentStreak || 0;
+            
+            // Calculer le niveau
+            const level = Math.floor((profile.stats?.totalPoints || 0) / 100) + 1;
+            document.getElementById('userLevel').textContent = `Niveau ${level} - ${getLevelName(level)}`;
+        }
+
+        function getLevelName(level) {
+            if (level === 1) return 'Débutant';
+            if (level <= 3) return 'Apprenti';
+            if (level <= 5) return 'Confirmé';
+            if (level <= 10) return 'Expert';
+            return 'Maître';
+        }
+
+        function exportData() {
+            const allData = {
+                profile: profile,
+                tdahTasks: localStorage.getItem('tdah_tasks'),
+                dysTasks: localStorage.getItem('dys_tasks'),
+                journals: localStorage.getItem('daily_journals'),
+                rewards: localStorage.getItem('user_rewards')
+            };
+            
+            const dataStr = JSON.stringify(allData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sessad-export-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            
+            Utils.showToast('✓ Données exportées !', 'success');
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        
+                        if (confirm('Importer ces données ? Cela écrasera tes données actuelles.')) {
+                            if (data.profile) localStorage.setItem('user_profile', JSON.stringify(data.profile));
+                            if (data.tdahTasks) localStorage.setItem('tdah_tasks', data.tdahTasks);
+                            if (data.dysTasks) localStorage.setItem('dys_tasks', data.dysTasks);
+                            if (data.journals) localStorage.setItem('daily_journals', data.journals);
+                            if (data.rewards) localStorage.setItem('user_rewards', data.rewards);
+                            
+                            Utils.showToast('✓ Données importées !', 'success');
+                            setTimeout(() => location.reload(), 1500);
+                        }
+                    } catch (err) {
+                        Utils.showToast('❌ Fichier invalide', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ ATTENTION ! Cela supprimera TOUTES tes données (profil, tâches, journal, récompenses...). Es-tu sûr(e) ?')) {
+                if (confirm('Vraiment sûr(e) ? Cette action est irréversible !')) {
+                    localStorage.clear();
+                    Utils.showToast('✓ Toutes les données ont été supprimées', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

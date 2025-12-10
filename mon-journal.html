@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Journal - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        .journal-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .entry-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .emotion-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .emotion-btn {
+            padding: 20px;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 3rem;
+            text-align: center;
+            background: white;
+        }
+        
+        .emotion-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .emotion-btn.selected {
+            border-color: var(--success);
+            background: #E8F5E9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+                                    <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">
+                        👤 Mon Espace ▼
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="mon-profil.html">👤 Mon Profil</a>
+                        <a href="mes-recompenses.html">🏆 Mes Récompenses</a>
+                        <a href="mon-journal.html">📖 Mon Journal</a>
+                        <a href="mes-progres.html">📈 Mes Progrès</a>
+                        <a href="mini-jeux.html">🎮 Mini-Jeux</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Mon Journal</li>
+            </ul>
+        </nav>
+
+        <!-- Hero -->
+        <div class="journal-hero">
+            <h1 style="font-size: 3rem; color: white; margin-bottom: 20px;">📖 Mon Journal Quotidien</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95;">
+                Écris tes émotions, tes réussites et tes pensées chaque jour
+            </p>
+            <div style="margin-top: 20px;">
+                <span style="background: rgba(255,255,255,0.25); padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    📅 <span id="totalEntries">0</span> entrées
+                </span>
+                <span style="background: rgba(255,255,255,0.25); padding: 10px 20px; border-radius: 20px; margin: 5px; display: inline-block;">
+                    🔥 <span id="currentStreak">0</span> jours de suite
+                </span>
+            </div>
+        </div>
+
+        <!-- Nouvelle entrée -->
+        <div class="card">
+            <h2 class="card-title">✍️ Nouvelle Entrée - <span id="todayDate"></span></h2>
+            
+            <div style="margin: 30px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 15px;">Comment je me sens aujourd'hui :</label>
+                <div class="emotion-selector">
+                    <div class="emotion-btn" onclick="selectEmotion('😊', 'Joyeux')">
+                        <div>😊</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Joyeux</div>
+                    </div>
+                    <div class="emotion-btn" onclick="selectEmotion('😢', 'Triste')">
+                        <div>😢</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Triste</div>
+                    </div>
+                    <div class="emotion-btn" onclick="selectEmotion('😰', 'Anxieux')">
+                        <div>😰</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Anxieux</div>
+                    </div>
+                    <div class="emotion-btn" onclick="selectEmotion('😡', 'En colère')">
+                        <div>😡</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Colère</div>
+                    </div>
+                    <div class="emotion-btn" onclick="selectEmotion('😴', 'Fatigué')">
+                        <div>😴</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Fatigué</div>
+                    </div>
+                    <div class="emotion-btn" onclick="selectEmotion('😌', 'Calme')">
+                        <div>😌</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">Calme</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 10px;">Ma réussite d'aujourd'hui :</label>
+                <input type="text" id="successInput" placeholder="Quelque chose dont je suis fier(e)..." style="width: 100%;">
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 10px;">Ce que j'ai ressenti aujourd'hui :</label>
+                <textarea id="feelingsInput" placeholder="Écris tes pensées, tes émotions, ce qui s'est passé..." style="min-height: 150px;"></textarea>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 10px;">Niveau d'énergie (1-10) :</label>
+                <input type="range" id="energyLevel" min="1" max="10" value="5" style="width: 100%;">
+                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                    <span>1 - Très faible</span>
+                    <span id="energyValue">5</span>
+                    <span>10 - Excellent</span>
+                </div>
+            </div>
+
+            <button onclick="saveEntry()" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.2rem;">
+                💾 Enregistrer mon entrée
+            </button>
+        </div>
+
+        <!-- Graphique émotions -->
+        <div class="card">
+            <h2 class="card-title">📊 Mon Évolution Émotionnelle</h2>
+            <canvas id="emotionChart" style="max-height: 300px; margin-top: 30px;"></canvas>
+        </div>
+
+        <!-- Mes entrées précédentes -->
+        <div class="card">
+            <h2 class="card-title">📚 Mes Entrées Précédentes</h2>
+            <div id="entriesList"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="mon-profil.html">Mon Profil</a></li>
+                    <li><a href="mes-recompenses.html">Mes Récompenses</a></li>
+                    <li><a href="mes-progres.html">Mes Progrès</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        let selectedEmotion = null;
+        let journals = JSON.parse(localStorage.getItem('daily_journals')) || [];
+
+        window.addEventListener('load', () => {
+            displayTodayDate();
+            updateStats();
+            displayEntries();
+            createEmotionChart();
+            
+            // Slider énergie
+            document.getElementById('energyLevel').addEventListener('input', (e) => {
+                document.getElementById('energyValue').textContent = e.target.value;
+            });
+        });
+
+        function displayTodayDate() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('todayDate').textContent = today.toLocaleDateString('fr-FR', options);
+        }
+
+        function selectEmotion(emoji, label) {
+            document.querySelectorAll('.emotion-btn').forEach(btn => btn.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            selectedEmotion = { emoji, label };
+        }
+
+        function saveEntry() {
+            if (!selectedEmotion) {
+                Utils.showToast('❌ Sélectionne une émotion !', 'error');
+                return;
+            }
+
+            const success = document.getElementById('successInput').value.trim();
+            const feelings = document.getElementById('feelingsInput').value.trim();
+            
+            if (!feelings) {
+                Utils.showToast('❌ Écris quelque chose dans ton journal !', 'error');
+                return;
+            }
+
+            const entry = {
+                id: Utils.generateId(),
+                date: new Date().toISOString(),
+                emotion: selectedEmotion,
+                success: success,
+                feelings: feelings,
+                energy: parseInt(document.getElementById('energyLevel').value)
+            };
+
+            journals.unshift(entry);
+            localStorage.setItem('daily_journals', JSON.stringify(journals));
+
+            // Ajouter points
+            if (typeof addPoints === 'function') {
+                addPoints(15, 'Entrée journal');
+            }
+
+            Utils.showToast('✓ Entrée enregistrée ! +15 points', 'success');
+            
+            // Réinitialiser formulaire
+            document.getElementById('successInput').value = '';
+            document.getElementById('feelingsInput').value = '';
+            document.getElementById('energyLevel').value = 5;
+            document.getElementById('energyValue').textContent = 5;
+            document.querySelectorAll('.emotion-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedEmotion = null;
+
+            updateStats();
+            displayEntries();
+            createEmotionChart();
+        }
+
+        function updateStats() {
+            document.getElementById('totalEntries').textContent = journals.length;
+            
+            // Calculer série (simplifié)
+            let streak = 0;
+            if (journals.length > 0) {
+                const today = new Date().toDateString();
+                const lastEntry = new Date(journals[0].date).toDateString();
+                if (today === lastEntry) streak = 1;
+            }
+            document.getElementById('currentStreak').textContent = streak;
+        }
+
+        function displayEntries() {
+            const container = document.getElementById('entriesList');
+            
+            if (journals.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Aucune entrée pour le moment. Écris ta première !</p>';
+                return;
+            }
+
+            container.innerHTML = journals.slice(0, 10).map(entry => {
+                const date = new Date(entry.date);
+                const dateStr = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                
+                return `
+                    <div class="entry-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="font-size: 2.5rem;">${entry.emotion.emoji}</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--primary);">${dateStr}</div>
+                                    <div style="color: #666; font-size: 0.9rem;">${entry.emotion.label}</div>
+                                </div>
+                            </div>
+                            <button onclick="deleteEntry('${entry.id}')" style="background: #FF6B6B; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>
+                        </div>
+                        
+                        ${entry.success ? `<div style="background: #E8F5E9; padding: 15px; border-radius: 10px; margin-bottom: 10px;"><strong>✨ Réussite :</strong> ${entry.success}</div>` : ''}
+                        
+                        <div style="color: #333; line-height: 1.6;">${entry.feelings}</div>
+                        
+                        <div style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                            Énergie : ${'⚡'.repeat(Math.ceil(entry.energy / 2))} ${entry.energy}/10
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteEntry(id) {
+            if (confirm('Supprimer cette entrée ?')) {
+                journals = journals.filter(e => e.id !== id);
+                localStorage.setItem('daily_journals', JSON.stringify(journals));
+                displayEntries();
+                createEmotionChart();
+                Utils.showToast('✓ Entrée supprimée', 'success');
+            }
+        }
+
+        function createEmotionChart() {
+            const ctx = document.getElementById('emotionChart');
+            
+            // Données des 7 derniers jours
+            const last7 = journals.slice(0, 7).reverse();
+            const labels = last7.map(e => new Date(e.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }));
+            const energyData = last7.map(e => e.energy);
+
+            if (window.emotionChartInstance) {
+                window.emotionChartInstance.destroy();
+            }
+
+            window.emotionChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Niveau d\'énergie',
+                        data: energyData,
+                        borderColor: 'rgb(102, 126, 234)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
