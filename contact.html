@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html" class="active">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Contact</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; margin-bottom: 40px;">
+            <h1 class="card-title" style="font-size: 2.5rem;">📧 Nous Contacter</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Une question, une suggestion ou besoin d'aide ? N'hésite pas à nous contacter !
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <!-- Formulaire -->
+            <div class="card">
+                <h2 class="card-title">📝 Envoyer un message</h2>
+                <p style="margin-bottom: 30px; color: #666;">Remplis ce formulaire et nous te répondrons rapidement.</p>
+                
+                <form id="contactForm" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label for="name" style="display: block; font-weight: 600; margin-bottom: 8px;">Ton nom :</label>
+                        <input type="text" id="name" name="name" placeholder="Prénom et nom" required>
+                    </div>
+
+                    <div>
+                        <label for="email" style="display: block; font-weight: 600; margin-bottom: 8px;">Email (de tes parents si tu es mineur) :</label>
+                        <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                    </div>
+
+                    <div>
+                        <label for="subject" style="display: block; font-weight: 600; margin-bottom: 8px;">Sujet :</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">-- Choisis un sujet --</option>
+                            <option value="question">❓ Question générale</option>
+                            <option value="bug">🐛 Signaler un bug</option>
+                            <option value="suggestion">💡 Suggestion d'amélioration</option>
+                            <option value="aide">🆘 Demande d'aide</option>
+                            <option value="autre">💬 Autre</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" style="display: block; font-weight: 600; margin-bottom: 8px;">Ton message :</label>
+                        <textarea id="message" name="message" placeholder="Écris ton message ici..." style="min-height: 150px;" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="padding: 15px; font-size: 1.1rem;">
+                        📨 Envoyer le message
+                    </button>
+                </form>
+
+                <div id="formMessage" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; text-align: center; font-weight: 600;"></div>
+            </div>
+
+            <!-- Informations de contact -->
+            <div>
+                <div class="card" style="margin-bottom: 30px;">
+                    <h2 class="card-title">🏢 SESSAD Petit Prince</h2>
+                    <div style="line-height: 2; color: #666;">
+                        <p><strong>Adresse :</strong><br>[Adresse du SESSAD]</p>
+                        <p style="margin-top: 15px;"><strong>Téléphone :</strong><br>[Numéro de téléphone]</p>
+                        <p style="margin-top: 15px;"><strong>Email :</strong><br>[Email du SESSAD]</p>
+                        <p style="margin-top: 15px;"><strong>Horaires :</strong><br>Lundi - Vendredi : 9h - 17h</p>
+                    </div>
+                </div>
+
+                <div class="card" style="background: #E8F5E9; border: 2px solid var(--success);">
+                    <h3 style="color: var(--success); margin-bottom: 15px;">💡 Bon à savoir</h3>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>Nous répondons généralement sous 48h</li>
+                        <li>Pour les urgences, appelle directement le SESSAD</li>
+                        <li>Tes données personnelles ne sont pas stockées sur ce site</li>
+                        <li>Ce formulaire est destiné aux questions sur les outils du site</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: #FFF3E0; border: 2px solid var(--warning);">
+                    <h3 style="color: var(--warning); margin-bottom: 15px;">⚠️ Important</h3>
+                    <p style="line-height: 1.8;">
+                        Ce formulaire n'est pas pour des urgences médicales ou des suivis individuels. Pour toute question concernant ton accompagnement au SESSAD, contacte directement ton référent ou l'accueil du service.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Rapide -->
+        <div class="card">
+            <h2 class="card-title">❓ Questions Fréquentes</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div style="background: #F0F8FF; padding: 25px; border-radius: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Comment utiliser les outils ?</h3>
+                    <p style="line-height: 1.8;">Chaque outil a des instructions intégrées. N'hésite pas à explorer ! Tu peux aussi consulter la <a href="ressources.html" style="color: var(--primary); font-weight: 600;">page Ressources</a>.</p>
+                </div>
+
+                <div style="background: #F0F8FF; padding: 25px; border-radius: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Mes données sont-elles sécurisées ?</h3>
+                    <p style="line-height: 1.8;">Oui ! Aucune donnée n'est envoyée à des serveurs. Tout reste sur ton appareil. Consulte notre <a href="rgpd.html" style="color: var(--primary); font-weight: 600;">page RGPD</a>.</p>
+                </div>
+
+                <div style="background: #F0F8FF; padding: 25px; border-radius: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Le site fonctionne-t-il hors ligne ?</h3>
+                    <p style="line-height: 1.8;">Partiellement. Une fois la page chargée, les outils fonctionnent même sans internet, sauf ceux qui utilisent des services externes (API Dropl par exemple).</p>
+                </div>
+
+                <div style="background: #F0F8FF; padding: 25px; border-radius: 15px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Puis-je suggérer une amélioration ?</h3>
+                    <p style="line-height: 1.8;">Bien sûr ! Utilise le formulaire ci-dessus en choisissant "Suggestion d'amélioration". Nous lisons tous les messages !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <ul>
+                    <li><a href="assistant-tdah.html">Assistant TDAH</a></li>
+                    <li><a href="assistant-tsa.html">Assistant TSA</a></li>
+                    <li><a href="assistant-dys.html">Assistant Dys</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+    <script>
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('formMessage');
+            
+            // Simulation d'envoi (en réalité, il faudrait un backend)
+            messageDiv.style.display = 'block';
+            messageDiv.style.background = '#D4EDDA';
+            messageDiv.style.color = '#155724';
+            messageDiv.style.border = '2px solid #28A745';
+            messageDiv.textContent = '✅ Message envoyé avec succès ! Nous te répondrons bientôt.';
+            
+            // Réinitialiser le formulaire
+            this.reset();
+            
+            // Masquer le message après 5 secondes
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

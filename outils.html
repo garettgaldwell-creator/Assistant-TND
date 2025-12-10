@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Outils pratiques pour TDAH, TSA et Dys - Séquentiels, plannings, pictogrammes">
+    <title>Outils - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .tool-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-top: 5px solid var(--primary);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .tool-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html" class="active">🛠️ Outils</a></li>
+                <li><a href="ressources.html">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Outils</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; margin-bottom: 40px;">
+            <h1 class="card-title" style="font-size: 2.5rem;">🛠️ Boîte à Outils</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Tous les outils pratiques pour t'accompagner au quotidien : séquentiels, plannings, pictogrammes, gestion des émotions et bien plus !
+            </p>
+        </div>
+
+        <!-- Outils de gestion -->
+        <div class="card">
+            <h2 class="card-title">📋 Outils de Gestion</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='assistant-tdah.html#tasks'">
+                    <div class="tool-icon">📝</div>
+                    <h3 class="tool-title">Gestion des Tâches</h3>
+                    <p class="tool-description">Organise tes tâches par priorité (haute, moyenne, basse, un jour)</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tdah-color);">TDAH</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tdah.html#sequential'">
+                    <div class="tool-icon">📋</div>
+                    <h3 class="tool-title">Créer un Séquentiel</h3>
+                    <p class="tool-description">Crée des routines visuelles étape par étape avec images et génère un PDF</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tdah-color);">TDAH</span>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#planning'">
+                    <div class="tool-icon">📅</div>
+                    <h3 class="tool-title">Planning Visuel</h3>
+                    <p class="tool-description">Organise ta journée ou ta semaine avec un planning illustré</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils émotionnels -->
+        <div class="card">
+            <h2 class="card-title">❤️ Outils Émotionnels</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='index.html#emotions'">
+                    <div class="tool-icon">😊</div>
+                    <h3 class="tool-title">Carte des Émotions</h3>
+                    <p class="tool-description">Identifie ton émotion actuelle et découvre tes besoins</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--primary);">Tous</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#emotions'">
+                    <div class="tool-icon">🌡️</div>
+                    <h3 class="tool-title">Thermomètre des Émotions</h3>
+                    <p class="tool-description">Mesure ton niveau d'intensité émotionnelle sur une échelle visuelle</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tdah.html#problem'">
+                    <div class="tool-icon">🧩</div>
+                    <h3 class="tool-title">Résoudre un Problème</h3>
+                    <p class="tool-description">Décompose un problème en solutions concrètes et plan d'action</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tdah-color);">TDAH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils de communication -->
+        <div class="card">
+            <h2 class="card-title">💬 Outils de Communication</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#pictos'">
+                    <div class="tool-icon">🖼️</div>
+                    <h3 class="tool-title">Pictogrammes</h3>
+                    <p class="tool-description">Banque d'images pour exprimer besoins, émotions, activités</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#scenarios'">
+                    <div class="tool-icon">💭</div>
+                    <h3 class="tool-title">Scénarios Sociaux</h3>
+                    <p class="tool-description">Prépare-toi aux situations sociales avec des scénarios illustrés</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-dys.html#adapter'">
+                    <div class="tool-icon">📖</div>
+                    <h3 class="tool-title">Adaptateur de Texte</h3>
+                    <p class="tool-description">Adapte les textes avec police dyslexique, espacements, couleurs</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--dys-color);">Dys</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils de concentration -->
+        <div class="card">
+            <h2 class="card-title">⏱️ Outils de Concentration</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='index.html#timer'">
+                    <div class="tool-icon">⏰</div>
+                    <h3 class="tool-title">Focus Timer</h3>
+                    <p class="tool-description">Timer Pomodoro avec sessions de 15, 25 ou 45 minutes</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--primary);">Tous</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tdah.html#situations'">
+                    <div class="tool-icon">🎪</div>
+                    <h3 class="tool-title">Situations du Quotidien</h3>
+                    <p class="tool-description">Stratégies pour gérer procrastination, hyperfocus, frustration</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tdah-color);">TDAH</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#sensory'">
+                    <div class="tool-icon">🎨</div>
+                    <h3 class="tool-title">Gestion Sensorielle</h3>
+                    <p class="tool-description">Identifie et gère les surcharges sensorielles</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils de suivi -->
+        <div class="card">
+            <h2 class="card-title">📊 Outils de Suivi</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='assistant-tdah.html#stats'">
+                    <div class="tool-icon">📈</div>
+                    <h3 class="tool-title">Statistiques</h3>
+                    <p class="tool-description">Visualise tes progrès et ta régularité avec des graphiques</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tdah-color);">TDAH</span>
+                    </div>
+                </div>
+
+                <div class="tool-card" onclick="window.location.href='assistant-tsa.html#routines'">
+                    <div class="tool-icon">📚</div>
+                    <h3 class="tool-title">Mes Routines Sauvegardées</h3>
+                    <p class="tool-description">Retrouve toutes tes routines créées et réutilise-les</p>
+                    <div>
+                        <span class="tool-badge" style="background: var(--tsa-color);">TSA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section aide -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; margin-bottom: 20px;">💡 Besoin d'aide ?</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">
+                Si tu ne sais pas quel outil utiliser, va sur la page de ton assistant correspondant (TDAH, TSA ou Dys) où tous les outils sont organisés par catégorie.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="assistant-tdah.html" class="btn" style="background: white; color: #667eea;">🧠 Assistant TDAH</a>
+                <a href="assistant-tsa.html" class="btn" style="background: white; color: #667eea;">🧩 Assistant TSA</a>
+                <a href="assistant-dys.html" class="btn" style="background: white; color: #667eea;">📚 Assistant Dys</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <ul>
+                    <li><a href="assistant-tdah.html">Assistant TDAH</a></li>
+                    <li><a href="assistant-tsa.html">Assistant TSA</a></li>
+                    <li><a href="assistant-dys.html">Assistant Dys</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>

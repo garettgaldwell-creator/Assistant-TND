@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ressources et documentation sur TDAH, TSA et troubles Dys">
+    <title>Ressources - SESSAD Petit Prince</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo-petit-prince.webp" alt="Logo Petit Prince">
+                <h1>SESSAD Petit Prince</h1>
+            </a>
+            
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 Accueil</a></li>
+                <li><a href="assistant-tdah.html">🧠 TDAH</a></li>
+                <li><a href="assistant-tsa.html">🧩 TSA</a></li>
+                <li><a href="assistant-dys.html">📚 Dys</a></li>
+                <li><a href="outils.html">🛠️ Outils</a></li>
+                <li><a href="ressources.html" class="active">📖 Ressources</a></li>
+                <li><a href="contact.html">📧 Contact</a></li>
+            </ul>
+            
+            <div class="nav-accessibility">
+                <button id="textSizeBtn" class="accessibility-btn">A+</button>
+                <button id="contrastBtn" class="accessibility-btn">◐</button>
+                <button id="dyslexicBtn" class="accessibility-btn">Dys</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li><a href="index.html">Accueil</a></li>
+                <li><span class="breadcrumb-separator">›</span></li>
+                <li>Ressources</li>
+            </ul>
+        </nav>
+
+        <div class="card" style="text-align: center; margin-bottom: 40px;">
+            <h1 class="card-title" style="font-size: 2.5rem;">📖 Ressources</h1>
+            <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                Documentation, guides pratiques et informations pour mieux comprendre le TDAH, le TSA et les troubles Dys
+            </p>
+        </div>
+
+        <!-- Comprendre le TDAH -->
+        <div class="card">
+            <h2 class="card-title" style="color: var(--tdah-color);">🧠 Comprendre le TDAH</h2>
+            
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Qu'est-ce que le TDAH ?</h3>
+            <p style="line-height: 1.8;">
+                Le <strong>Trouble du Déficit de l'Attention avec ou sans Hyperactivité (TDAH)</strong> est un trouble neurodéveloppemental qui affecte l'attention, l'impulsivité et parfois l'activité motrice. Il se manifeste dès l'enfance et peut persister à l'âge adulte.
+            </p>
+
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Les 3 principales manifestations</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div style="background: #FFF3E0; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tdah-color); margin-bottom: 10px;">💭 Inattention</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Difficultés à se concentrer</li>
+                        <li>Oublis fréquents</li>
+                        <li>Difficulté à terminer les tâches</li>
+                        <li>Distraction facile</li>
+                    </ul>
+                </div>
+                <div style="background: #E8F5E9; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tdah-color); margin-bottom: 10px;">⚡ Hyperactivité</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Agitation motrice</li>
+                        <li>Difficulté à rester assis</li>
+                        <li>Besoin de bouger</li>
+                        <li>Parle beaucoup</li>
+                    </ul>
+                </div>
+                <div style="background: #E3F2FD; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tdah-color); margin-bottom: 10px;">🎯 Impulsivité</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Agit avant de réfléchir</li>
+                        <li>Difficulté à attendre</li>
+                        <li>Interrompt les autres</li>
+                        <li>Prend des risques</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">💪 Points forts du TDAH</h3>
+            <p style="line-height: 1.8;">Le TDAH n'est pas qu'une difficulté ! Il apporte aussi des forces :</p>
+            <ul style="margin-left: 30px; line-height: 2;">
+                <li><strong>Créativité :</strong> Pensée originale et imaginative</li>
+                <li><strong>Énergie :</strong> Grande capacité d'enthousiasme</li>
+                <li><strong>Hyperfocus :</strong> Concentration intense sur les sujets passionnants</li>
+                <li><strong>Spontanéité :</strong> Capacité d'adaptation rapide</li>
+            </ul>
+        </div>
+
+        <!-- Comprendre le TSA -->
+        <div class="card">
+            <h2 class="card-title" style="color: var(--tsa-color);">🧩 Comprendre le TSA</h2>
+            
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Qu'est-ce que le TSA ?</h3>
+            <p style="line-height: 1.8;">
+                Le <strong>Trouble du Spectre de l'Autisme (TSA)</strong> est un trouble neurodéveloppemental qui affecte la communication sociale et le comportement. Il se manifeste de manière très diverse (d'où le terme "spectre").
+            </p>
+
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Principales caractéristiques</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div style="background: #F3E5F5; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tsa-color); margin-bottom: 10px;">💬 Communication sociale</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Difficulté avec les codes sociaux</li>
+                        <li>Compréhension littérale du langage</li>
+                        <li>Contact visuel difficile</li>
+                        <li>Besoin de clarté et de prévisibilité</li>
+                    </ul>
+                </div>
+                <div style="background: #E8EAF6; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tsa-color); margin-bottom: 10px;">🔄 Comportements répétitifs</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Besoin de routine</li>
+                        <li>Intérêts spécifiques intenses</li>
+                        <li>Mouvements répétitifs (stimming)</li>
+                        <li>Résistance au changement</li>
+                    </ul>
+                </div>
+                <div style="background: #FCE4EC; padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--tsa-color); margin-bottom: 10px;">🎨 Sensorialité</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Hypersensibilité ou hyposensibilité</li>
+                        <li>Bruits, lumières, textures</li>
+                        <li>Besoin de régulation sensorielle</li>
+                        <li>Surcharges possibles</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">💪 Points forts du TSA</h3>
+            <ul style="margin-left: 30px; line-height: 2;">
+                <li><strong>Attention aux détails :</strong> Grande précision et rigueur</li>
+                <li><strong>Honnêteté :</strong> Authenticité et franchise</li>
+                <li><strong>Expertise :</strong> Connaissances approfondies dans les domaines d'intérêt</li>
+                <li><strong>Logique :</strong> Pensée structurée et cohérente</li>
+                <li><strong>Loyauté :</strong> Relations sincères et durables</li>
+            </ul>
+        </div>
+
+        <!-- Comprendre les Dys -->
+        <div class="card">
+            <h2 class="card-title" style="color: var(--dys-color);">📚 Comprendre les troubles Dys</h2>
+            
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Les différents troubles Dys</h3>
+            <p style="line-height: 1.8;">Les troubles "Dys" sont des troubles spécifiques des apprentissages d'origine neurologique. Ils sont durables mais peuvent être compensés avec des aménagements adaptés.</p>
+
+            <div style="margin: 30px 0;">
+                <div style="background: #E0F2F1; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: var(--dys-color); margin-bottom: 10px;">📖 Dyslexie</h4>
+                    <p style="margin-bottom: 10px;"><strong>Trouble de la lecture et de l'écriture</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Difficulté à déchiffrer les mots</li>
+                        <li>Confusion de lettres (b/d, p/q)</li>
+                        <li>Lecture lente et fatigante</li>
+                        <li>Orthographe difficile</li>
+                    </ul>
+                </div>
+
+                <div style="background: #FFF9C4; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: var(--dys-color); margin-bottom: 10px;">✍️ Dysgraphie</h4>
+                    <p style="margin-bottom: 10px;"><strong>Trouble de l'écriture manuscrite</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Écriture illisible ou difficile</li>
+                        <li>Douleur lors de l'écriture</li>
+                        <li>Lenteur importante</li>
+                        <li>Difficulté à organiser l'espace feuille</li>
+                    </ul>
+                </div>
+
+                <div style="background: #E1BEE7; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: var(--dys-color); margin-bottom: 10px;">🔢 Dyscalculie</h4>
+                    <p style="margin-bottom: 10px;"><strong>Trouble du calcul et des mathématiques</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Difficulté avec les nombres</li>
+                        <li>Sens du calcul fragile</li>
+                        <li>Tables de multiplication difficiles</li>
+                        <li>Résolution de problèmes complexe</li>
+                    </ul>
+                </div>
+
+                <div style="background: #FFCCBC; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <h4 style="color: var(--dys-color); margin-bottom: 10px;">🏃 Dyspraxie</h4>
+                    <p style="margin-bottom: 10px;"><strong>Trouble de la coordination motrice</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Maladresse motrice</li>
+                        <li>Difficulté à planifier les gestes</li>
+                        <li>Organisation spatiale difficile</li>
+                        <li>Activités manuelles complexes</li>
+                    </ul>
+                </div>
+
+                <div style="background: #B2DFDB; padding: 25px; border-radius: 15px;">
+                    <h4 style="color: var(--dys-color); margin-bottom: 10px;">🗣️ Dysphasie</h4>
+                    <p style="margin-bottom: 10px;"><strong>Trouble du langage oral</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Difficulté à s'exprimer oralement</li>
+                        <li>Vocabulaire limité</li>
+                        <li>Construction de phrases complexe</li>
+                        <li>Compréhension parfois difficile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ressources externes -->
+        <div class="card">
+            <h2 class="card-title">🔗 Ressources Externes</h2>
+            
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">Associations et organismes</h3>
+            <ul style="margin-left: 30px; line-height: 2.5;">
+                <li><strong>HyperSupers TDAH France :</strong> Association d'aide aux familles TDAH</li>
+                <li><strong>Autisme France :</strong> Information et soutien pour le TSA</li>
+                <li><strong>FFDys :</strong> Fédération Française des Dys</li>
+                <li><strong>MDPH :</strong> Maison Départementale des Personnes Handicapées (aides et aménagements)</li>
+            </ul>
+
+            <h3 style="color: var(--primary); margin: 30px 0 15px;">📱 Applications utiles</h3>
+            <ul style="margin-left: 30px; line-height: 2.5;">
+                <li><strong>Forest :</strong> Application de concentration avec timer</li>
+                <li><strong>Calm / Petit Bambou :</strong> Méditation et relaxation</li>
+                <li><strong>Niki Agenda :</strong> Planning visuel pour TSA</li>
+                <li><strong>Dys-Vocal :</strong> Outils pour dyslexie</li>
+            </ul>
+        </div>
+
+        <!-- FAQ -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; margin-bottom: 30px;">❓ Questions Fréquentes</h2>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+                <h3 style="color: white; margin-bottom: 10px;">Ces troubles sont-ils permanents ?</h3>
+                <p style="line-height: 1.8;">Oui, ce sont des troubles neurodéveloppementaux durables. Mais avec des stratégies adaptées, un accompagnement et des aménagements, on peut très bien vivre avec et développer ses compétences.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+                <h3 style="color: white; margin-bottom: 10px;">Peut-on avoir plusieurs troubles en même temps ?</h3>
+                <p style="line-height: 1.8;">Oui, c'est fréquent ! On parle de "comorbidité". Par exemple, TDAH + Dys, ou TSA + Dys. Chaque profil est unique.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px;">
+                <h3 style="color: white; margin-bottom: 10px;">Où trouver de l'aide ?</h3>
+                <p style="line-height: 1.8;">Parles-en à tes parents, ton médecin, ou les professionnels du SESSAD. Des aménagements scolaires, un suivi orthophonique, ergothérapie ou psychomotricité peuvent beaucoup aider.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="outils.html">Outils</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <ul>
+                    <li><a href="assistant-tdah.html">Assistant TDAH</a></li>
+                    <li><a href="assistant-tsa.html">Assistant TSA</a></li>
+                    <li><a href="assistant-dys.html">Assistant Dys</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Légal</h3>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="rgpd.html">RGPD</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SESSAD Petit Prince - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>
